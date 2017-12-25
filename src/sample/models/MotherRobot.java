@@ -15,4 +15,9 @@ public class MotherRobot {
     public Location getLocation() {
         return location;
     }
+
+    public MotherRobot(Location location, List<Double> signalStrengths) {
+        this.location = location;
+        this.signalStrengths = signalStrengths;
+    }
 }
