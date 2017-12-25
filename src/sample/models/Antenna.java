@@ -31,7 +31,7 @@ public class Antenna {
                 Math.pow(Math.abs(location.getY() - robot.getLocation().getY()), 2)
         );
 
-        return a - 10 * Math.log10(distance);
+        return a - 10 * n * Math.log10(distance);
     }
 
     /**
@@ -46,7 +46,7 @@ public class Antenna {
                         Math.pow(Math.abs(location.getY() - motherRobot.getLocation().getY()), 2)
         );
 
-        return a - 10 * Math.log10(distance);
+        return a - 10 * n * Math.log10(distance);
     }
 
 }
