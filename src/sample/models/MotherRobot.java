@@ -1,7 +1,8 @@
 package sample.models;
 
 import sample.models.objects.Location;
-import sample.models.objects.SignalStrengthSet;
+
+import java.util.List;
 
 /**
  * Created by Jakub Adamczyk on 15.12.2017
@@ -9,5 +10,9 @@ import sample.models.objects.SignalStrengthSet;
 public class MotherRobot {
     private Location location;
 
-    private SignalStrengthSet signalStrengths;
+    private List<Double> signalStrengths;
+
+    public Location getLocation() {
+        return location;
+    }
 }

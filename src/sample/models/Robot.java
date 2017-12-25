@@ -1,7 +1,8 @@
 package sample.models;
 
 import sample.models.objects.Location;
-import sample.models.objects.SignalStrengthSet;
+
+import java.util.List;
 
 /**
  * Created by Jakub Adamczyk on 15.12.2017
@@ -9,10 +10,14 @@ import sample.models.objects.SignalStrengthSet;
 public class Robot {
     private Location location;
 
-    private SignalStrengthSet signalStrengths;
+    private List<Double> signalStrengths;
 
-//	* Signal strengths property
-//	* Getter for all properties together through SignalStrength
+    public Location getLocation() {
+        return location;
+    }
+
+    //	* Signal strengths property
+//	* Getter for all properties together through signalStrength
 //	* Set Signal Strengths by getting signal strength
 
 

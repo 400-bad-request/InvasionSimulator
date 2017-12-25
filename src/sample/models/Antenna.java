@@ -21,20 +21,32 @@ public class Antenna {
 
     /**
      * Method is used for calculating signal strength for certain node/robot
+     *
      * @param robot Robot object for which we calculateStrength
-     * @return SignalStrength obeject with signal strengths for antenna we use to calcualte
+     * @return double obeject with signal strengths for antenna we use to calcualte
      */
-    public SignalStrength calculateStrength(Robot robot) {
+    public double calculateStrength(Robot robot) {
+        double distance = Math.sqrt(
+                Math.pow(Math.abs(location.getX() - robot.getLocation().getX()), 2) +
+                Math.pow(Math.abs(location.getY() - robot.getLocation().getY()), 2)
+        );
 
+        return a - 10 * Math.log10(distance);
     }
 
     /**
      * Method is used for calculating signal strength for main motherRobot
+     *
      * @param motherRobot MotherRobot parameter for which we calculate signal strength
-     * @return SignalStrength obeject with signal strengths for antenna we use to calcualte
+     * @return double obeject with signal strengths for antenna we use to calcualte
      */
-    public SignalStrength calculateStrength(MotherRobot motherRobot) {
+    public double calculateStrength(MotherRobot motherRobot) {
+        double distance = Math.sqrt(
+                Math.pow(Math.abs(location.getX() - motherRobot.getLocation().getX()), 2) +
+                        Math.pow(Math.abs(location.getY() - motherRobot.getLocation().getY()), 2)
+        );
 
+        return a - 10 * Math.log10(distance);
     }
 
 }
