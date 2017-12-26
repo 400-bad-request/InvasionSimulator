@@ -34,6 +34,12 @@ public class Antenna {
         return a - 10 * n * Math.log10(distance);
     }
 
+    /**
+     * Universal method for calculating signal strength
+     * @param x double first location property
+     * @param y double second location property
+     * @return double with strength value
+     */
     public double calculateStrength(double x, double y) {
         double distance = Math.sqrt(
                 Math.pow(Math.abs(location.getX() - x), 2) +

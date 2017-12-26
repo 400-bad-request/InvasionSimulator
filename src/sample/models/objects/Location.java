@@ -6,6 +6,7 @@ public class Location {
     private double x;
     private double y;
 
+    // Explicit constructor
     public Location(double x, double y) {
         this.x = x;
         this.y = y;
@@ -27,6 +28,7 @@ public class Location {
         this.y = y;
     }
 
+    // Constructor that creates random location
     public Location() {
         Random random = new Random();
         this.x = random.nextDouble();
