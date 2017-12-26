@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Stage {
+public class StageObjects {
     private MotherRobot motherRobot;
     private List<Robot> robots;
     private List<Antenna> antennas;
 
-    public Stage(Configuration config) {
+    public StageObjects(Configuration config) {
 
         // Generating randomly located antennas
         this.antennas = new ArrayList<>(

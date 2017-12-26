@@ -1,7 +1,7 @@
 package sample.viewcontroller;
 
 import sample.models.Configuration;
-import sample.models.Stage;
+import sample.models.StageObjects;
 
 public class EntryController {
 
@@ -9,7 +9,7 @@ public class EntryController {
 
         // New stage object along with configuration object as a constructor parameter
         Configuration config = new Configuration();
-        Stage stage = new Stage(config);
+        StageObjects stage = new StageObjects(config);
 
 
     }
