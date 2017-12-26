@@ -34,6 +34,15 @@ public class Antenna {
         return a - 10 * n * Math.log10(distance);
     }
 
+    public double calculateStrength(double x, double y) {
+        double distance = Math.sqrt(
+                Math.pow(Math.abs(location.getX() - x), 2) +
+                        Math.pow(Math.abs(location.getY() - y), 2)
+        );
+
+        return a - 10 * n * Math.log10(distance);
+    }
+
     /**
      * Method is used for calculating signal strength for main motherRobot
      *

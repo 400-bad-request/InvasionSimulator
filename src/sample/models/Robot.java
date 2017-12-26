@@ -16,6 +16,11 @@ public class Robot {
         return location;
     }
 
+    public Robot(Location location, List<Double> signalStrengths) {
+        this.location = location;
+        this.signalStrengths = signalStrengths;
+    }
+
     //	* Signal strengths property
 //	* Getter for all properties together through signalStrength
 //	* Set Signal Strengths by getting signal strength

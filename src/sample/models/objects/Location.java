@@ -1,5 +1,7 @@
 package sample.models.objects;
 
+import java.util.Random;
+
 public class Location {
     private double x;
     private double y;
@@ -26,5 +28,10 @@ public class Location {
     }
 
     public Location() {
+        Random random = new Random();
+        this.x = random.nextDouble();
+        this.y = random.nextDouble();
     }
+
+
 }

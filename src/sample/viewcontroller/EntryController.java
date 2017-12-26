@@ -1,11 +1,17 @@
 package sample.viewcontroller;
 
+import sample.models.Configuration;
 import sample.models.Stage;
 
 public class EntryController {
 
-    public void drawStage(Stage stage) {
-        // gonna drwa every thing from stage right here, including creating new window
+    public void drawRandomStage() {
+
+        // New stage object along with configuration object as a constructor parameter
+        Configuration config = new Configuration();
+        Stage stage = new Stage(config);
+
+
     }
 
 }
