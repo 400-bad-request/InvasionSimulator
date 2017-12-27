@@ -1,7 +1,5 @@
 package sample.viewcontroller;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -10,6 +8,8 @@ import javafx.scene.paint.Color;
 import sample.models.*;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class EntryController {
@@ -54,10 +54,23 @@ public class EntryController {
             drawRobots( activeCtx, stage.getRobots() );
             drawMotherRobot( passiveCtx, stage.getMotherRobot() );
 
-            stageGroup.setOnMouseClicked((EventHandler<Event>) event -> {
-                System.out.println("TEST");
+            // Creating event listener
+            stageGroup.setOnMouseClicked(event -> {
+                System.out.println(event.getSceneX());
+                System.out.println(event.getSceneY());
                 clearCanvas(activeCtx, config.stageWidth, config.stageHeight);
             });
+
+            // Antenna animation
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    clearCanvas(passiveCtx, config.stageWidth, config.stageHeight);
+                    drawAntennas( passiveCtx, stage.getAntennas() );
+                    drawMotherRobot( passiveCtx, stage.getMotherRobot() );
+                }
+            }, 0, 100);
         }
 
         /**
@@ -70,12 +83,9 @@ public class EntryController {
 
             ctx.setFill(Color.RED);
             ctx.setStroke(Color.RED);
-            int innerRadius = 5;
-            int outerRadius = 10;
 
             for (Antenna element : antennas) {
-                ctx.fillOval(element.getLocation().getX() - innerRadius, element.getLocation().getY() - innerRadius, 2* innerRadius, 2* innerRadius);
-                ctx.strokeOval(element.getLocation().getX() - outerRadius, element.getLocation().getY() - outerRadius, 2* outerRadius, 2* outerRadius);
+                element.draw(ctx);
             }
 
             ctx.setFill(Color.rgb(255, 0, 0, 0.2));
@@ -98,13 +108,11 @@ public class EntryController {
         * @param robots List<Robot> object containing information about the location of robots
         */
         private void drawRobots(GraphicsContext ctx, List<Robot> robots) {
-
+            // Setting visualization color.
             ctx.setFill(Color.BLUE);
-            ctx.setStroke(Color.BLUE);
-            int radius = 5;
 
             for (Robot element : robots) {
-                ctx.fillOval(element.getLocation().getX() - radius, element.getLocation().getY() - radius, 2* radius, 2* radius);
+                element.draw(ctx);
             }
         }
 
@@ -115,13 +123,9 @@ public class EntryController {
         * @param motherRobot  MotherRobot object containing information about the location of mother robot
         */
         private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot) {
-
+            // Setting visualization color.
             ctx.setFill(Color.BLUE);
-            ctx.setStroke(Color.BLUE);
-            int radius = 10;
-
-            ctx.fillOval(motherRobot.getLocation().getX() - radius, motherRobot.getLocation().getY() - radius, 2* radius, 2* radius);
-
+            motherRobot.draw(ctx);
         }
 
         /**

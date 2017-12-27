@@ -1,5 +1,6 @@
 package sample.models;
 
+import javafx.scene.canvas.GraphicsContext;
 import sample.models.objects.Location;
 import sample.models.objects.SignalStrength;
 
@@ -12,6 +13,9 @@ public class Antenna {
     // properties for calculatin RSSI signal strength:
     private double a;
     private double n;
+
+    private int visualizationInnerRadius = 5;
+    private int visualizationOuterRadius = 0;
 
     public Location getLocation() { return this.location; }
     public double getA() { return this.a; }
@@ -72,4 +76,26 @@ public class Antenna {
         return a - 10 * n * Math.log10(distance);
     }
 
+    /**
+    * Method is used for visualisation of Antenna on canvas.
+    *
+    * @param ctx GraphicsContext object allowing to draw on selected canvas
+    */
+    public void draw(GraphicsContext ctx) {
+        ctx.fillOval(
+                location.getX() - visualizationInnerRadius,
+                location.getY() - visualizationInnerRadius,
+                2* visualizationInnerRadius,
+                2* visualizationInnerRadius
+        );
+
+        ctx.strokeOval(
+                location.getX() - visualizationOuterRadius,
+                location.getY() - visualizationOuterRadius,
+                2* visualizationOuterRadius,
+                2* visualizationOuterRadius
+        );
+
+        visualizationOuterRadius = (visualizationOuterRadius + 2) % 20;
+    }
 }

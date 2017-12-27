@@ -19,11 +19,11 @@ public class StageObjects {
 
         // Generating randomly located antennas
         this.antennas = new ArrayList<>(
-                Arrays.asList(
-                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
-                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
-                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n)
-                )
+            Arrays.asList(
+                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
+                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
+                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n)
+            )
         );
 
         // Generating ArrayList of randomly located robots
