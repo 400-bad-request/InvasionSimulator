@@ -4,12 +4,18 @@
 <?import javafx.scene.canvas.Canvas?>
 
 
-<Group
+<Group fx:id="stageGroup"
         xmlns:fx="http://javafx.com/fxml"
         fx:controller="sample.viewcontroller.EntryController">
     <children>
         <Canvas
-                fx:id="stageCanvas"
+                fx:id="constCanvas"
+        />
+        <Canvas
+                fx:id="activeCanvas"
+        />
+        <Canvas
+                fx:id="passiveCanvas"
         />
     </children>
 </Group>
