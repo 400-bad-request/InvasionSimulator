@@ -13,10 +13,18 @@ public class Antenna {
     private double a;
     private double n;
 
+    public Location getLocation() { return this.location; }
+    public double getA() { return this.a; }
+    public double getN() { return this.n; }
+
+    public void setLocation(Location location) { this.location = location; }
+    public void setA(double a) { this.a = a; }
+    public void setN(double n) { this.n = n; }
+
     public Antenna(Location location, double a, double n) {
-        this.location = location;
-        this.a = a;
-        this.n = n;
+        setLocation(location);
+        setA(a);
+        setN(n);
     }
 
     /**

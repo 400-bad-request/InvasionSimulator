@@ -11,14 +11,19 @@ public class StageObjects {
     private List<Robot> robots;
     private List<Antenna> antennas;
 
+    public List<Antenna> getAntennas() { return this.antennas; }
+    public List<Robot> getRobots() { return this.robots; }
+
     public StageObjects(Configuration config) {
+
+        System.out.println("TEST");
 
         // Generating randomly located antennas
         this.antennas = new ArrayList<>(
                 Arrays.asList(
-                        new Antenna(new Location(), config.a, config.n),
-                        new Antenna(new Location(), config.a, config.n),
-                        new Antenna(new Location(), config.a, config.n)
+                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
+                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
+                        new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n)
                 )
         );
 
@@ -29,7 +34,7 @@ public class StageObjects {
 
             // random location
             // TODO: Refactor and make a method in Location class for generating random x and y
-            Location location = new Location();
+            Location location = new Location(config.stageWidth, config.stageHeight);
 
             List<Double> strengths = new ArrayList<>();
             for (Antenna antenna : antennas) {
@@ -40,7 +45,7 @@ public class StageObjects {
         }
 
         // Generating randomly located mother robot
-        Location location = new Location();
+        Location location = new Location(config.stageWidth, config.stageHeight);
 
         List<Double> strengths = new ArrayList<>();
         for (Antenna antenna : antennas) {

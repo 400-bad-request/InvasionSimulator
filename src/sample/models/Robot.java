@@ -9,7 +9,6 @@ import java.util.List;
  */
 public class Robot {
     private Location location;
-
     private List<Double> signalStrengths;
 
     public Location getLocation() {

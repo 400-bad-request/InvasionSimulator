@@ -29,10 +29,10 @@ public class Location {
     }
 
     // Constructor that creates random location
-    public Location() {
+    public Location(int stageWidth, int stageHeight) {
         Random random = new Random();
-        this.x = random.nextDouble();
-        this.y = random.nextDouble();
+        this.x = random.nextDouble() * stageWidth;
+        this.y = random.nextDouble() * stageHeight;
     }
 
 

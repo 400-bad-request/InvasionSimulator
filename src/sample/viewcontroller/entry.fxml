@@ -1,5 +1,23 @@
-<?import javafx.scene.layout.GridPane?>
-<GridPane fx:controller="sample.viewcontroller.EntryController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+<?xml version="1.0" encoding="UTF-8"?>
 
-</GridPane>
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+
+
+<Group
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="sample.viewcontroller.EntryController">
+    <children>
+        <Canvas
+                fx:id="stageCanvas"
+                height="600.0"
+                width="1000.0" />
+    </children>
+</Group>
+
+<!-- STARA WERSJA -->
+<!--<?import javafx.scene.layout.GridPane?>-->
+<!--<GridPane fx:controller="sample.viewcontroller.EntryController"-->
+<!--xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">-->
+
+<!--</GridPane>-->
