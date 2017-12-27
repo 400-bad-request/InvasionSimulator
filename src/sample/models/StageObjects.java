@@ -13,10 +13,9 @@ public class StageObjects {
 
     public List<Antenna> getAntennas() { return this.antennas; }
     public List<Robot> getRobots() { return this.robots; }
+    public MotherRobot getMotherRobot() { return this.motherRobot; }
 
     public StageObjects(Configuration config) {
-
-        System.out.println("TEST");
 
         // Generating randomly located antennas
         this.antennas = new ArrayList<>(
@@ -27,19 +26,19 @@ public class StageObjects {
                 )
         );
 
-        // Generating randomly located i robots
-        // ArrayList for all of the robots
+        // Generating ArrayList of randomly located robots
         this.robots = new ArrayList<>();
         for (int i = 0; i < config.robotsCount; i++) {
 
-            // random location
-            // TODO: Refactor and make a method in Location class for generating random x and y
+            // Random location of single robot
             Location location = new Location(config.stageWidth, config.stageHeight);
 
+            // Calculation of signal strength for subsequent antennas
             List<Double> strengths = new ArrayList<>();
             for (Antenna antenna : antennas) {
                 strengths.add(antenna.calculateStrength(location.getX(), location.getY()));
             }
+
 
             this.robots.add(new Robot(location, strengths));
         }
