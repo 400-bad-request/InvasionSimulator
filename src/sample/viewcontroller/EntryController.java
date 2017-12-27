@@ -55,10 +55,21 @@ public class EntryController {
             drawMotherRobot( passiveCtx, stage.getMotherRobot() );
 
             // Creating event listener
-            stageGroup.setOnMouseClicked(event -> {
-                System.out.println(event.getSceneX());
-                System.out.println(event.getSceneY());
+            stageGroup.setOnMouseMoved(event -> {
+                Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
+
                 clearCanvas(activeCtx, config.stageWidth, config.stageHeight);
+
+                if (activeRobot != null) {
+                    activeCtx.setFill(Color.BLUE);
+                    activeRobot.draw(activeCtx);
+
+
+                    activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
+                } else {
+                    drawRobots( activeCtx, stage.getRobots() );
+                }
+
             });
 
             // Antenna animation
@@ -166,6 +177,16 @@ public class EntryController {
         */
         private void clearCanvas(GraphicsContext ctx, int stageWidth, int stageHeight) {
             ctx.clearRect(0, 0, stageWidth, stageHeight);
+        }
+
+        private Robot robotOnHover(List<Robot> robots, double mouseX, double mouseY) {
+
+            for (Robot element : robots) {
+                if ( (Math.pow((element.getLocation().getX() - mouseX), 2) + Math.pow((element.getLocation().getY() - mouseY), 2))  <= 25) {
+                    return element;
+                }
+            }
+            return null;
         }
 
 //    }

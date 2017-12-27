@@ -17,6 +17,10 @@ public class Robot {
         return location;
     }
 
+    public List<Double> getSignalStrengths() {
+        return signalStrengths;
+    }
+
     public Robot(Location location, List<Double> signalStrengths) {
         this.location = location;
         this.signalStrengths = signalStrengths;
@@ -34,6 +38,19 @@ public class Robot {
             2* visualizationRadius,
             2* visualizationRadius
         );
+    }
+
+    /**
+    * Method is create string containing informations about signal strengths.
+    */
+    public String returnSignalInfo() {
+        String info = "";
+        int i = 1;
+        for(Double value : signalStrengths) {
+            info += Integer.toString(i) + ": " + Double.toString(value) + System.lineSeparator();
+            i++;
+        }
+        return info.substring(0, info.length() - 1);
     }
 
     //	* Signal strengths property
