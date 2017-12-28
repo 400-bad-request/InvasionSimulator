@@ -1,9 +1,11 @@
 package sample.viewcontroller;
 
 import javafx.fxml.FXML;
-import javafx.scene.Group;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import sample.Main;
 import sample.models.*;
@@ -17,15 +19,16 @@ import java.util.TimerTask;
  */
 public class BoardController {
 
-
     // Reference to the JavaFX Canvas objects
     @FXML private Canvas constCanvas;
     @FXML private Canvas activeCanvas;
     @FXML private Canvas passiveCanvas;
-    @FXML private Group stageGroup;
+    @FXML private Pane stageGroup;
+    @FXML private StackPane holder;
 
     @FXML
     void initialize() {
+
         // Creating stage object that will produce stage content information.
         StageObjects stage = new StageObjects(Main.config);
 
@@ -37,6 +40,9 @@ public class BoardController {
         GraphicsContext activeCtx = activeCanvas.getGraphicsContext2D();
         GraphicsContext passiveCtx = passiveCanvas.getGraphicsContext2D();
 
+        stageGroup.getStyleClass().add("root");
+        holder.getStyleClass().add("canvas");
+
         // Drawing grid
         drawGrid( constCtx, Main.config.stageWidth, Main.config.stageHeight);
 
@@ -45,9 +51,7 @@ public class BoardController {
         drawRobots( activeCtx, stage.getRobots() );
         drawMotherRobot( passiveCtx, stage.getMotherRobot() );
 
-        /**
-         * Event listener that is responsible for showing robot info on hover.
-         */
+        // Event listener that is responsible for showing robot info on hover.
         stageGroup.setOnMouseMoved(event -> {
             Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
 
@@ -64,9 +68,7 @@ public class BoardController {
 
         });
 
-        /**
-         * Timer that allow for Antennas signal animation.
-         */
+        // Timer that allow for Antennas signal animation.
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -205,6 +207,8 @@ public class BoardController {
         constCanvas.setHeight(stageHeight);
         activeCanvas.setHeight(stageHeight);
         passiveCanvas.setHeight(stageHeight);
+
+        passiveCanvas.setCursor(Cursor.CROSSHAIR);
     }
 
 }

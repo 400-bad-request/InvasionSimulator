@@ -1,0 +1,10 @@
+.canvas {
+    -fx-background-color: white ;
+    -fx-border-color: black;
+    -fx-border-width: 1;
+    -fx-border-style: solid;
+}
+
+.root {
+    -fx-background-color: lightgrey ;
+}

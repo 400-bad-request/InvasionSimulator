@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.Group?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
+<Pane fx:id="stageGroup"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="sample.viewcontroller.BoardController"
+      stylesheets="@style.css">
 
-<Group fx:id="stageGroup"
-        xmlns:fx="http://javafx.com/fxml"
-        fx:controller="sample.viewcontroller.BoardController">
-    <children>
+    <StackPane fx:id="holder">
         <Canvas
                 fx:id="constCanvas"
         />
@@ -17,5 +19,5 @@
         <Canvas
                 fx:id="passiveCanvas"
         />
-    </children>
-</Group>
+    </StackPane>
+</Pane>

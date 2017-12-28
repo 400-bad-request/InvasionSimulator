@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.Main;
@@ -27,6 +28,7 @@ public class ConfigController {
     @FXML private TextField fieldHeight;
     @FXML private TextField robotsDensity;
     @FXML private TextField division;
+    @FXML private GridPane grid;
 
     @FXML
     public void initialize() {
@@ -34,6 +36,7 @@ public class ConfigController {
         Main.config = new Configuration();
         // Setting default values to text boxes
         setDefaultValues();
+        grid.getStyleClass().add("root");
     }
 
     public void submit(ActionEvent actionEvent) {
@@ -52,6 +55,7 @@ public class ConfigController {
             Scene wiewer_page_scene = new Scene(viewer_page_parent);
             Stage board_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             board_stage.setScene(wiewer_page_scene);
+            board_stage.setTitle("Visualization");
             board_stage.setWidth(1000);
             board_stage.setHeight(600);
             board_stage.show();

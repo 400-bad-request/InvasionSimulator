@@ -6,7 +6,9 @@
 <?import javafx.scene.text.Text?>
 
 <GridPane fx:controller="sample.viewcontroller.ConfigController"
-          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
+          stylesheets="@style.css"
+          fx:id="grid">
 
     <Text GridPane.columnIndex="0" GridPane.rowIndex="0" text="Inset value of coefficient A: "/>
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="aCoefficient"/>
@@ -26,5 +28,5 @@
     <Text GridPane.columnIndex="0" GridPane.rowIndex="7" text="Inset division dimension: "/>
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
 
-    <Button GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit" fx:id="send_submit"/>
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit"/>
 </GridPane>
