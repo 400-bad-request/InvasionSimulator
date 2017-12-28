@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StageObjects {
+    private Configuration config;
     private MotherRobot motherRobot;
     private List<Robot> robots;
     private List<Antenna> antennas;
@@ -17,34 +18,33 @@ public class StageObjects {
 
     public StageObjects(Configuration config) {
 
+        this.config = config;
+
         // Generating randomly located antennas
-        this.antennas = new ArrayList<>(
-            Arrays.asList(
-                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
-                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n),
-                new Antenna(new Location(config.stageWidth, config.stageHeight), config.a, config.n)
-            )
-        );
-
+        this.CreateAntennas();
         // Generating ArrayList of randomly located robots
-        this.robots = new ArrayList<>();
-        for (int i = 0; i < config.robotsCount; i++) {
-
-            // Random location of single robot
-            Location location = new Location(config.stageWidth, config.stageHeight);
-
-            // Calculation of signal strength for subsequent antennas
-            List<Double> strengths = new ArrayList<>();
-            for (Antenna antenna : antennas) {
-                strengths.add(antenna.calculateStrength(location.getX(), location.getY()));
-            }
-
-
-            this.robots.add(new Robot(location, strengths));
-        }
-
+        this.CreateRobots();
         // Generating randomly located mother robot
-        Location location = new Location(config.stageWidth, config.stageHeight);
+        this.CreateMotherRobot();
+    }
+
+    /**
+     * Method is used to create "randomly" located antennas
+     */
+    private void CreateAntennas() {
+
+        this.antennas = new ArrayList<>();
+        // Creating required amount of antennas
+        for(int i = 0; i < 3; i++) {
+            this.antennas.add(new Antenna(new Location(this.config.stageWidth, this.config.stageHeight), this.config.a, this.config.n));
+        }
+    }
+
+    /**
+     * Method is used to create "randomly" located mother robot
+     */
+    private void CreateMotherRobot() {
+        Location location = new Location(this.config.stageWidth, this.config.stageHeight);
 
         List<Double> strengths = new ArrayList<>();
         for (Antenna antenna : antennas) {
@@ -52,6 +52,40 @@ public class StageObjects {
         }
 
         this.motherRobot = new MotherRobot(location, strengths);
+    }
+
+    /**
+     * Method is used to create "randomly" located robots with selected density
+     */
+    private void CreateRobots() {
+
+        // Generating ArrayList of randomly located robots
+        this.robots = new ArrayList<>();
+
+        // Iteration over horizontal divisions of field
+        // Horizontal coordinate will be drown from the range of numbers between [horizontalLimit, horizontalLimit + division]
+        for(int horizontalLimit = 0; horizontalLimit < this.config.stageWidth; horizontalLimit += this.config.division) {
+
+            // Iteration over vertical divisions of field
+            // Vertical coordinate will be drown from the range of numbers between [verticalLimit, verticalLimit + division]
+            for(int verticalLimit = 0; verticalLimit < this.config.stageHeight; verticalLimit += this.config.division) {
+
+                // Creating required amount of robots per quadrant
+                for(int i = 0; i < this.config.robotsDensity; i++) {
+
+                    // Random location of single robot within selected quadrant
+                    Location location = new Location(horizontalLimit, horizontalLimit + this.config.division , verticalLimit, verticalLimit + this.config.division);
+
+                    // Calculation of signal strength for subsequent antennas
+                    List<Double> strengths = new ArrayList<>();
+                    for (Antenna antenna : antennas) {
+                        strengths.add(antenna.calculateStrength(location.getX(), location.getY()));
+
+                        this.robots.add(new Robot(location, strengths));
+                    }
+                }
+            }
+        }
     }
 }
 
