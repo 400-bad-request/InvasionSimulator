@@ -12,7 +12,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class EntryController {
+public class BoardController {
 
 //    public void drawRandomStage() {
 

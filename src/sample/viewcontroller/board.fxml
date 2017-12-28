@@ -6,7 +6,7 @@
 
 <Group fx:id="stageGroup"
         xmlns:fx="http://javafx.com/fxml"
-        fx:controller="sample.viewcontroller.EntryController">
+        fx:controller="sample.viewcontroller.BoardController">
     <children>
         <Canvas
                 fx:id="constCanvas"
