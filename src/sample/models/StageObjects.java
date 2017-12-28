@@ -16,12 +16,21 @@ public class StageObjects {
     public List<Robot> getRobots() { return this.robots; }
     public MotherRobot getMotherRobot() { return this.motherRobot; }
 
+    /**
+     * Creating board content
+     * @param config object containing required parameters to conduct simulation
+     */
     public StageObjects(Configuration config) {
 
         this.config = config;
 
         // Generating randomly located antennas
         this.CreateAntennas();
+
+        while(!ValidateAntennasPosition()) {
+            this.CreateAntennas();
+        }
+
         // Generating ArrayList of randomly located robots
         this.CreateRobots();
         // Generating randomly located mother robot
@@ -86,6 +95,26 @@ public class StageObjects {
                 }
             }
         }
+    }
+
+    /**
+     * Method checks whether antennas positions creates triangle with area higher than minimal allowed
+     * @return flag indicating whether the positions of the antennas are accepted
+     */
+    private boolean ValidateAntennasPosition() {
+
+        // Definition of minimal ratio between triangle created by antennas position and total board field
+        double minFieldRatio = 0.05;
+
+        double triangleField = 0.5* Math.abs(
+            (this.antennas.get(0).getLocation().getX() - this.antennas.get(2).getLocation().getX())*
+            (this.antennas.get(1).getLocation().getY() - this.antennas.get(0).getLocation().getY())-
+            (this.antennas.get(0).getLocation().getX() - this.antennas.get(1).getLocation().getX())*
+            (this.antennas.get(2).getLocation().getY() - this.antennas.get(0).getLocation().getY())
+        );
+
+        double boardField = this.config.stageWidth * this.config.stageHeight;
+        return (triangleField > minFieldRatio * boardField);
     }
 }
 

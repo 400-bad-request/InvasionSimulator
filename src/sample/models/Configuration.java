@@ -7,6 +7,4 @@ public class Configuration {
     public int division = 50;
     public int stageHeight = 600;
     public int stageWidth = 1000;
-
-    public int robotsCount = 10;
 }
