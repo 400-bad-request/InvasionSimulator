@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import sample.Main;
 import sample.models.*;
 
 import java.util.List;
@@ -26,20 +27,18 @@ public class BoardController {
         @FXML
         private Group stageGroup;
 
-        // New stage object along with configuration object as a constructor parameter
-        Configuration config = new Configuration();
-        StageObjects stage = new StageObjects(config);
+        StageObjects stage = new StageObjects(Main.config);
 
         @FXML
         void initialize() {
             // Setting canvas width and height
-            constCanvas.setWidth(config.stageWidth);
-            activeCanvas.setWidth(config.stageWidth);
-            passiveCanvas.setWidth(config.stageWidth);
+            constCanvas.setWidth(Main.config.stageWidth);
+            activeCanvas.setWidth(Main.config.stageWidth);
+            passiveCanvas.setWidth(Main.config.stageWidth);
 
-            constCanvas.setHeight(config.stageWidth);
-            activeCanvas.setHeight(config.stageWidth);
-            passiveCanvas.setHeight(config.stageWidth);
+            constCanvas.setHeight(Main.config.stageWidth);
+            activeCanvas.setHeight(Main.config.stageWidth);
+            passiveCanvas.setHeight(Main.config.stageWidth);
 
             // Acquisition of canvas context
             GraphicsContext constCtx = constCanvas.getGraphicsContext2D();
@@ -47,7 +46,7 @@ public class BoardController {
             GraphicsContext passiveCtx = passiveCanvas.getGraphicsContext2D();
 
             // Drawing grid
-            drawGrid( constCtx, config.stageWidth, config.stageHeight);
+            drawGrid( constCtx, Main.config.stageWidth, Main.config.stageHeight);
 
             // Drawing stage content
             drawAntennas( passiveCtx, stage.getAntennas() );
@@ -58,7 +57,7 @@ public class BoardController {
             stageGroup.setOnMouseMoved(event -> {
                 Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
 
-                clearCanvas(activeCtx, config.stageWidth, config.stageHeight);
+                clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
                 if (activeRobot != null) {
                     activeCtx.setFill(Color.BLUE);
@@ -77,7 +76,7 @@ public class BoardController {
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
                 public void run() {
-                    clearCanvas(passiveCtx, config.stageWidth, config.stageHeight);
+                    clearCanvas(passiveCtx, Main.config.stageWidth, Main.config.stageHeight);
                     drawAntennas( passiveCtx, stage.getAntennas() );
                     drawMotherRobot( passiveCtx, stage.getMotherRobot() );
                 }

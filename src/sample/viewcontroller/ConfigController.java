@@ -1,12 +1,19 @@
 package sample.viewcontroller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.Main;
 import sample.models.Configuration;
 
+import java.io.IOException;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
@@ -27,6 +34,30 @@ public class ConfigController {
         Main.config = new Configuration();
         // Setting default values to text boxes
         setDefaultValues();
+    }
+
+    public void submit(ActionEvent actionEvent) {
+        // Acquire data from form
+        Main.config.a = Double.parseDouble(aCoefficient.getText());
+        Main.config.n = Double.parseDouble(nCoefficient.getText());
+
+        Main.config.stageWidth = Integer.parseInt(fieldWidth.getText());
+        Main.config.stageHeight = Integer.parseInt(fieldHeight.getText());
+
+        Main.config.robotsDensity = Integer.parseInt(robotsDensity.getText());
+        Main.config.division = Integer.parseInt(division.getText());
+
+        try {
+            Parent viewer_page_parent = FXMLLoader.load(getClass().getResource("board.fxml"));
+            Scene wiewer_page_scene = new Scene(viewer_page_parent);
+            Stage board_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            board_stage.setScene(wiewer_page_scene);
+            board_stage.setWidth(1000);
+            board_stage.setHeight(600);
+            board_stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

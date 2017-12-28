@@ -26,5 +26,5 @@
     <Text GridPane.columnIndex="0" GridPane.rowIndex="7" text="Inset division dimension: "/>
     <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
 
-<!--<Button GridPane.columnIndex="1" GridPane.rowIndex="2" text="Submit" onAction="#submit" fx:id="send_submit"/>-->
+    <Button GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit" fx:id="send_submit"/>
 </GridPane>
