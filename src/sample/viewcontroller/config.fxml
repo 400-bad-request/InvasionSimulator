@@ -5,28 +5,30 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Label?>
 
+<?import javafx.geometry.Insets?>
 <GridPane fx:controller="sample.viewcontroller.ConfigController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
           stylesheets="@style.css"
           styleClass="root_start">
+    <padding><Insets bottom="250" left="500"/></padding>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" text="Inset value of coefficient A: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="aCoefficient"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="aCoefficient"/>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="1" text="Inset value of coefficient n: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="nCoefficient"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="nCoefficient"/>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Inset field width: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="fieldWidth"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="fieldWidth"/>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="4" text="Inset field height: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="fieldHeight"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="fieldHeight"/>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="6" text="Inset number of robots / division: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="robotsDensity"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="robotsDensity"/>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="7" text="Inset division dimension: "/>
-    <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
 
     <Button styleClass="button" GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit"/>
 </GridPane>

@@ -1,8 +1,6 @@
 package sample.viewcontroller;
 
 import javafx.fxml.FXML;
-import javafx.geometry.BoundingBox;
-import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -14,7 +12,6 @@ import sample.Main;
 import sample.models.*;
 import sample.models.Robot;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
