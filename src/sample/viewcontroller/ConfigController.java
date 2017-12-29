@@ -133,7 +133,7 @@ public class ConfigController {
         };
 
         // Converter for integer number field
-        StringConverter<Integer> converterInteger = new StringConverter<Integer>() {
+        StringConverter<Integer> converterInteger = new StringConverter<>() {
 
             @Override
             public Integer fromString(String s) {
