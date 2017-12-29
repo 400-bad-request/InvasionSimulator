@@ -12,9 +12,7 @@ import sample.Main;
 import sample.models.*;
 import sample.models.Robot;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Created by Piotr Skalski on 27.12.2017
@@ -22,6 +20,11 @@ import java.util.TimerTask;
 public class BoardController {
 
     private Timer timer = new Timer();
+    private ArrayList<Color> antennasColors = new ArrayList<Color>(Arrays.asList(
+            Color.rgb(0,0,255),
+            Color.rgb(0,255,0),
+            Color.rgb(255,0,0)
+    ));
 
     // Reference to the JavaFX Canvas objects
     @FXML
@@ -93,13 +96,14 @@ public class BoardController {
      */
     private void drawAntennas(GraphicsContext ctx, List<Antenna> antennas) {
 
-        ctx.setFill(Color.RED);
-        ctx.setStroke(Color.RED);
-
-        for (Antenna element : antennas) {
-            element.draw(ctx);
+        for (int i = 0; i < antennas.size(); i++) {
+            ctx.setFill(antennasColors.get(i));
+            ctx.setStroke(antennasColors.get(i));
+            antennas.get(i).draw(ctx);
         }
 
+
+        ctx.setStroke(Color.RED);
         ctx.setFill(Color.rgb(255, 0, 0, 0.2));
 
         ctx.fillPolygon(
