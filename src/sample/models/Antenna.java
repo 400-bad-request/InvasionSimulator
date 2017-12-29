@@ -17,13 +17,29 @@ public class Antenna {
     private int visualizationInnerRadius = 5;
     private int visualizationOuterRadius = 0;
 
-    public Location getLocation() { return this.location; }
-    public double getA() { return this.a; }
-    public double getN() { return this.n; }
+    public Location getLocation() {
+        return this.location;
+    }
 
-    public void setLocation(Location location) { this.location = location; }
-    public void setA(double a) { this.a = a; }
-    public void setN(double n) { this.n = n; }
+    public double getA() {
+        return this.a;
+    }
+
+    public double getN() {
+        return this.n;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public void setA(double a) {
+        this.a = a;
+    }
+
+    public void setN(double n) {
+        this.n = n;
+    }
 
     public Antenna(Location location, double a, double n) {
         setLocation(location);
@@ -40,7 +56,7 @@ public class Antenna {
     public double calculateStrength(Robot robot) {
         double distance = Math.sqrt(
                 Math.pow(Math.abs(location.getX() - robot.getLocation().getX()), 2) +
-                Math.pow(Math.abs(location.getY() - robot.getLocation().getY()), 2)
+                        Math.pow(Math.abs(location.getY() - robot.getLocation().getY()), 2)
         );
 
         return a - 10 * n * Math.log10(distance);
@@ -48,6 +64,7 @@ public class Antenna {
 
     /**
      * Universal method for calculating signal strength
+     *
      * @param x double first location property
      * @param y double second location property
      * @return double with strength value
@@ -77,23 +94,23 @@ public class Antenna {
     }
 
     /**
-    * Method is used for visualisation of Antenna on canvas.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    */
+     * Method is used for visualisation of Antenna on canvas.
+     *
+     * @param ctx GraphicsContext object allowing to draw on selected canvas
+     */
     public void draw(GraphicsContext ctx) {
         ctx.fillOval(
                 location.getX() - visualizationInnerRadius,
                 location.getY() - visualizationInnerRadius,
-                2* visualizationInnerRadius,
-                2* visualizationInnerRadius
+                2 * visualizationInnerRadius,
+                2 * visualizationInnerRadius
         );
 
         ctx.strokeOval(
                 location.getX() - visualizationOuterRadius,
                 location.getY() - visualizationOuterRadius,
-                2* visualizationOuterRadius,
-                2* visualizationOuterRadius
+                2 * visualizationOuterRadius,
+                2 * visualizationOuterRadius
         );
 
         visualizationOuterRadius = (visualizationOuterRadius + 2) % 20;
