@@ -36,7 +36,7 @@ public class ConfigController {
         Main.config = new Configuration();
         // Setting default values to text boxes
         setDefaultValues();
-        grid.getStyleClass().add("root");
+        grid.getStyleClass().add("root_start");
     }
 
     public void submit(ActionEvent actionEvent) {
