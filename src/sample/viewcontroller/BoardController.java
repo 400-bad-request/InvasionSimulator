@@ -137,7 +137,7 @@ public class BoardController {
      */
     private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot) {
         // Setting visualization color.
-        ctx.setFill(Color.BLUE);
+        ctx.setFill(Color.GREEN);
         motherRobot.draw(ctx);
     }
 
