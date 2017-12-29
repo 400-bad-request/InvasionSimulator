@@ -35,8 +35,8 @@ public class Robot {
         ctx.fillOval(
             location.getX() - visualizationRadius,
             location.getY() - visualizationRadius,
-            2* visualizationRadius,
-            2* visualizationRadius
+            2 * visualizationRadius,
+            2 * visualizationRadius
         );
     }
 
@@ -44,13 +44,14 @@ public class Robot {
     * Method is create string containing informations about signal strengths.
     */
     public String returnSignalInfo() {
-        String info = "";
+        StringBuilder info = new StringBuilder();
         int i = 1;
         for(Double value : signalStrengths) {
-            info += Integer.toString(i) + ": " + Double.toString(value) + System.lineSeparator();
+            info.append(Integer.toString(i)).append(": ").append(Double.toString(value)).append(System.lineSeparator());
             i++;
         }
-        return info.substring(0, info.length() - 1);
+//        return info.substring(0, info.length() - 1);
+        return info.toString();
     }
 
     //	* Signal strengths property

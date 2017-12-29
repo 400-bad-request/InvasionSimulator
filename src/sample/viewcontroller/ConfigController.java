@@ -1,5 +1,6 @@
 package sample.viewcontroller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +23,20 @@ import java.util.regex.Pattern;
 public class ConfigController {
 
     // Reference to the JavaFX objects from FXML
-    @FXML private TextField aCoefficient;
-    @FXML private TextField nCoefficient;
-    @FXML private TextField fieldWidth;
-    @FXML private TextField fieldHeight;
-    @FXML private TextField robotsDensity;
-    @FXML private TextField division;
-    @FXML private GridPane grid;
+    @FXML
+    private TextField aCoefficient;
+    @FXML
+    private TextField nCoefficient;
+    @FXML
+    private TextField fieldWidth;
+    @FXML
+    private TextField fieldHeight;
+    @FXML
+    private TextField robotsDensity;
+    @FXML
+    private TextField division;
+    @FXML
+    private GridPane grid;
 
     @FXML
     public void initialize() {
@@ -51,13 +59,19 @@ public class ConfigController {
         Main.config.division = Integer.parseInt(division.getText());
 
         try {
-            Parent viewer_page_parent = FXMLLoader.load(getClass().getResource("board.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("board.fxml"));
+            Parent viewer_page_parent = loader.load();
+            BoardController controller = loader.getController();
             Scene wiewer_page_scene = new Scene(viewer_page_parent);
             Stage board_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             board_stage.setScene(wiewer_page_scene);
             board_stage.setTitle("Visualization");
             board_stage.setWidth(1000);
             board_stage.setHeight(600);
+            board_stage.setOnCloseRequest(event -> {
+                controller.stopTimer();
+                Platform.exit();
+            });
             board_stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -78,9 +92,9 @@ public class ConfigController {
         UnaryOperator<TextFormatter.Change> filterDouble = c -> {
             String text = c.getControlNewText();
             if (validEditingStateDouble.matcher(text).matches()) {
-                return c ;
+                return c;
             } else {
-                return null ;
+                return null;
             }
         };
 
@@ -88,9 +102,9 @@ public class ConfigController {
         UnaryOperator<TextFormatter.Change> filterInteger = c -> {
             String text = c.getControlNewText();
             if (validEditingStateInteger.matcher(text).matches()) {
-                return c ;
+                return c;
             } else {
-                return null ;
+                return null;
             }
         };
 
@@ -100,7 +114,7 @@ public class ConfigController {
             @Override
             public Double fromString(String s) {
                 if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-                    return 0.0 ;
+                    return 0.0;
                 } else {
                     return Double.valueOf(s);
                 }
@@ -118,7 +132,7 @@ public class ConfigController {
             @Override
             public Integer fromString(String s) {
                 if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-                    return 0 ;
+                    return 0;
                 } else {
                     return Integer.valueOf(s);
                 }

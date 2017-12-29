@@ -19,12 +19,19 @@ import java.util.TimerTask;
  */
 public class BoardController {
 
+    private Timer timer = new Timer();
+
     // Reference to the JavaFX Canvas objects
-    @FXML private Canvas constCanvas;
-    @FXML private Canvas activeCanvas;
-    @FXML private Canvas passiveCanvas;
-    @FXML private Pane stageGroup;
-    @FXML private StackPane holder;
+    @FXML
+    private Canvas constCanvas;
+    @FXML
+    private Canvas activeCanvas;
+    @FXML
+    private Canvas passiveCanvas;
+    @FXML
+    private Pane stageGroup;
+    @FXML
+    private StackPane holder;
 
     @FXML
     void initialize() {
@@ -44,12 +51,12 @@ public class BoardController {
         holder.getStyleClass().add("canvas");
 
         // Drawing grid
-        drawGrid( constCtx, Main.config.stageWidth, Main.config.stageHeight);
+        drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight);
 
         // Drawing stage content
-        drawAntennas( passiveCtx, stage.getAntennas() );
-        drawRobots( activeCtx, stage.getRobots() );
-        drawMotherRobot( passiveCtx, stage.getMotherRobot() );
+        drawAntennas(passiveCtx, stage.getAntennas());
+        drawRobots(activeCtx, stage.getRobots());
+        drawMotherRobot(passiveCtx, stage.getMotherRobot());
 
         // Event listener that is responsible for showing robot info on hover.
         stageGroup.setOnMouseMoved(event -> {
@@ -63,29 +70,28 @@ public class BoardController {
 
                 activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
             } else {
-                drawRobots( activeCtx, stage.getRobots() );
+                drawRobots(activeCtx, stage.getRobots());
             }
 
         });
 
         // Timer that allow for Antennas signal animation.
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        this.timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 clearCanvas(passiveCtx, Main.config.stageWidth, Main.config.stageHeight);
-                drawAntennas( passiveCtx, stage.getAntennas() );
-                drawMotherRobot( passiveCtx, stage.getMotherRobot() );
+                drawAntennas(passiveCtx, stage.getAntennas());
+                drawMotherRobot(passiveCtx, stage.getMotherRobot());
             }
         }, 0, 100);
     }
 
     /**
-    * Method is used for visualisation of Antennas location.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    * @param antennas List<Antenna> object containing information about the location of antennas
-    */
+     * Method is used for visualisation of Antennas location.
+     *
+     * @param ctx      GraphicsContext object allowing to draw on selected canvas
+     * @param antennas List<Antenna> object containing information about the location of antennas
+     */
     private void drawAntennas(GraphicsContext ctx, List<Antenna> antennas) {
 
         ctx.setFill(Color.RED);
@@ -97,23 +103,23 @@ public class BoardController {
 
         ctx.setFill(Color.rgb(255, 0, 0, 0.2));
 
-        ctx.fillPolygon (
-            new double[] { antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX() },
-            new double[] { antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY() }, 3
+        ctx.fillPolygon(
+                new double[]{antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX()},
+                new double[]{antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY()}, 3
         );
 
-        ctx.strokePolygon (
-            new double[] { antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX() },
-            new double[] { antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY() }, 3
+        ctx.strokePolygon(
+                new double[]{antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX()},
+                new double[]{antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY()}, 3
         );
     }
 
     /**
-    * Method is used for visualisation of Robots location.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    * @param robots List<Robot> object containing information about the location of robots
-    */
+     * Method is used for visualisation of Robots location.
+     *
+     * @param ctx    GraphicsContext object allowing to draw on selected canvas
+     * @param robots List<Robot> object containing information about the location of robots
+     */
     private void drawRobots(GraphicsContext ctx, List<Robot> robots) {
         // Setting visualization color.
         ctx.setFill(Color.BLUE);
@@ -124,11 +130,11 @@ public class BoardController {
     }
 
     /**
-    * Method is used for visualisation of Mother Robot location.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    * @param motherRobot  MotherRobot object containing information about the location of mother robot
-    */
+     * Method is used for visualisation of Mother Robot location.
+     *
+     * @param ctx         GraphicsContext object allowing to draw on selected canvas
+     * @param motherRobot MotherRobot object containing information about the location of mother robot
+     */
     private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot) {
         // Setting visualization color.
         ctx.setFill(Color.BLUE);
@@ -136,12 +142,12 @@ public class BoardController {
     }
 
     /**
-    * Method is used for creating background grid.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    * @param stageWidth int width of canvas.
-    * @param stageHeight int height of canvas.
-    */
+     * Method is used for creating background grid.
+     *
+     * @param ctx         GraphicsContext object allowing to draw on selected canvas
+     * @param stageWidth  int width of canvas.
+     * @param stageHeight int height of canvas.
+     */
     private void drawGrid(GraphicsContext ctx, int stageWidth, int stageHeight) {
         // Spacing between lines of the grid
         int spacing = 50;
@@ -156,7 +162,7 @@ public class BoardController {
         ctx.setStroke(Color.LIGHTGRAY);
 
         for (int i = 0; i < hLineCount; i++) {
-            ctx.strokeLine(0, i * spacing, stageWidth,i * spacing);
+            ctx.strokeLine(0, i * spacing, stageWidth, i * spacing);
         }
 
         for (int i = 0; i < vLineCount; i++) {
@@ -165,12 +171,12 @@ public class BoardController {
     }
 
     /**
-    * Method is used for clearing canvas.
-    *
-    * @param ctx GraphicsContext object allowing to draw on selected canvas
-    * @param stageWidth int width of canvas.
-    * @param stageHeight int height of canvas.
-    */
+     * Method is used for clearing canvas.
+     *
+     * @param ctx         GraphicsContext object allowing to draw on selected canvas
+     * @param stageWidth  int width of canvas.
+     * @param stageHeight int height of canvas.
+     */
     private void clearCanvas(GraphicsContext ctx, int stageWidth, int stageHeight) {
         ctx.clearRect(0, 0, stageWidth, stageHeight);
     }
@@ -178,6 +184,7 @@ public class BoardController {
     /**
      * Method detect if any robot is located under mouse cursor on canvas.
      * If there is, it returns this instance of robot.
+     *
      * @param robots List<Robot> object containing information about the location of robots
      * @param mouseX double mouse X coordinate
      * @param mouseY double mouse Y coordinate
@@ -186,7 +193,7 @@ public class BoardController {
     private Robot robotOnHover(List<Robot> robots, double mouseX, double mouseY) {
 
         for (Robot element : robots) {
-            if ( (Math.pow((element.getLocation().getX() - mouseX), 2) + Math.pow((element.getLocation().getY() - mouseY), 2))  <= 25) {
+            if ((Math.pow((element.getLocation().getX() - mouseX), 2) + Math.pow((element.getLocation().getY() - mouseY), 2)) <= 25) {
                 return element;
             }
         }
@@ -195,7 +202,8 @@ public class BoardController {
 
     /**
      * Method sets location and size of view objects
-     * @param stageWidth width of field
+     *
+     * @param stageWidth  width of field
      * @param stageHeight height of field
      */
     private void setStage(int stageWidth, int stageHeight) {
@@ -211,4 +219,8 @@ public class BoardController {
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
     }
 
+    public void stopTimer() {
+        this.timer.cancel();
+        this.timer.purge();
+    }
 }
