@@ -22,7 +22,8 @@ import java.util.regex.Pattern;
 
 public class ConfigController {
 
-    // Reference to the JavaFX objects from FXML
+    // STAGE ELEMENTS
+    //==================================================================================================================
     @FXML
     private TextField aCoefficient;
     @FXML
@@ -37,7 +38,10 @@ public class ConfigController {
     private TextField division;
     @FXML
     private GridPane grid;
+    //==================================================================================================================
 
+    // HANDLER METHODS
+    //==================================================================================================================
     @FXML
     public void initialize() {
         // Assign value to config field
@@ -60,19 +64,21 @@ public class ConfigController {
 
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("board.fxml"));
-            Parent viewer_page_parent = loader.load();
+            Parent viewerPageParent = loader.load();
             BoardController controller = loader.getController();
-            Scene wiewer_page_scene = new Scene(viewer_page_parent);
-            Stage board_stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            board_stage.setScene(wiewer_page_scene);
-            board_stage.setTitle("Visualization");
-            board_stage.setWidth(1000);
-            board_stage.setHeight(600);
-            board_stage.setOnCloseRequest(event -> {
+            Scene viewerPageScene = new Scene(viewerPageParent);
+            Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            // Embedding new stage and configuring it's parameters
+            boardStage.setScene(viewerPageScene);
+            boardStage.setTitle("Visualization");
+            boardStage.setWidth(1000);
+            boardStage.setHeight(600);
+            // Overriden close request to perform timer stop and normal close action
+            boardStage.setOnCloseRequest(event -> {
                 controller.stopTimer();
                 Platform.exit();
             });
-            board_stage.show();
+            boardStage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -163,5 +169,5 @@ public class ConfigController {
         TextFormatter<Integer> divisionTextFormatter = new TextFormatter<>(converterInteger, Main.config.division, filterInteger);
         division.setTextFormatter(divisionTextFormatter);
     }
-
+    //==================================================================================================================
 }
