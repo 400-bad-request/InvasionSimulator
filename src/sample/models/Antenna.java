@@ -1,51 +1,67 @@
 package sample.models;
 
 import javafx.scene.canvas.GraphicsContext;
-import sample.models.objects.Location;
-import sample.models.objects.SignalStrength;
 
 /**
  * Created by Jakub Adamczyk on 15.12.2017
  */
 public class Antenna {
+
+    // PROPERTIES
+    //==================================================================================================================
+
+    // location
     private Location location;
-
-    // properties for calculatin RSSI signal strength:
-    private double a;
-    private double n;
-
-    private int visualizationInnerRadius = 5;
-    private int visualizationOuterRadius = 0;
 
     public Location getLocation() {
         return this.location;
-    }
-
-    public double getA() {
-        return this.a;
-    }
-
-    public double getN() {
-        return this.n;
     }
 
     public void setLocation(Location location) {
         this.location = location;
     }
 
+    // a
+    private double a;
+
+    public double getA() {
+        return this.a;
+    }
+
     public void setA(double a) {
         this.a = a;
+    }
+
+    // n
+    private double n;
+
+    public double getN() {
+        return this.n;
     }
 
     public void setN(double n) {
         this.n = n;
     }
 
+    private int visualizationInnerRadius = 5;
+
+    private int visualizationOuterRadius = 0;
+
+    //==================================================================================================================
+
+    // CONSTRUCTORS
+    //==================================================================================================================
+
+    //==================================================================================================================
     public Antenna(Location location, double a, double n) {
-        setLocation(location);
-        setA(a);
-        setN(n);
+        this.location = location;
+        this.a = a;
+        this.n = n;
     }
+    //==================================================================================================================
+
+    // METHODS
+    //==================================================================================================================
 
     /**
      * Method is used for calculating signal strength for certain node/robot
@@ -115,4 +131,5 @@ public class Antenna {
 
         visualizationOuterRadius = (visualizationOuterRadius + 2) % 20;
     }
+    //==================================================================================================================
 }

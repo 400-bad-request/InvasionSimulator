@@ -1,16 +1,44 @@
-package sample.models.objects;
+package sample.models;
 
 import java.util.Random;
 
 /**
- * Updated by Piotr Skalski on 28.12.2017
+ * Location wrapper class that holds two coordinates
  */
 public class Location {
+
+    // PROPERTIES
+    //==================================================================================================================
+
+    // x
     private double x;
+
+    public double getX() {
+        return x;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    // y
     private double y;
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+    //==================================================================================================================
+
+    // CONSTRUCTORS
+    //==================================================================================================================
 
     /**
      * Explicit constructor
+     *
      * @param x value on X axis coordinate
      * @param y value on Y axis coordinate
      */
@@ -21,7 +49,8 @@ public class Location {
 
     /**
      * Constructor that creates random location within the range of full stage
-     * @param stageWidth the maximum allowed value on X axis coordinate
+     *
+     * @param stageWidth  the maximum allowed value on X axis coordinate
      * @param stageHeight the maximum allowed value on Y axis coordinate
      */
     public Location(int stageWidth, int stageHeight) {
@@ -32,6 +61,7 @@ public class Location {
 
     /**
      * Constructor that creates random location within selected quadrant
+     *
      * @param minX the minimum allowed value on X axis coordinate
      * @param maxX the maximum allowed value on X axis coordinate
      * @param minY the minimum allowed value on Y axis coordinate
@@ -42,22 +72,5 @@ public class Location {
         this.x = minX + random.nextDouble() * (maxX - minX);
         this.y = minY + random.nextDouble() * (maxY - minY);
     }
-
-    // Getters
-    public double getX() {
-        return x;
-    }
-
-    public double getY() {
-        return y;
-    }
-
-    // Setters
-    public void setX(double x) {
-        this.x = x;
-    }
-
-    public void setY(double y) {
-        this.y = y;
-    }
+    //==================================================================================================================
 }

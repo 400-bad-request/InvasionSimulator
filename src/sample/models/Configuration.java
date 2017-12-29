@@ -1,5 +1,8 @@
 package sample.models;
 
+/**
+ * Configuration class that is a structure holding Configuration
+ */
 public class Configuration {
     public double a = 10;
     public double n = 1;
