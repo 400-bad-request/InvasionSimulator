@@ -1,4 +1,4 @@
-.canvas {
+.canvas_background {
     -fx-background-color: white ;
     -fx-border-color: black;
     -fx-border-width: 1;
@@ -6,7 +6,7 @@
 }
 
 .root {
-    -fx-background-color: lightgrey ;
+    -fx-background-color: #1d1d1d ;
 }
 
 .label {
@@ -38,4 +38,8 @@
 
 .button:hover {
     -fx-background-color: #3a3a3a;
+}
+
+.top_navbar {
+    -fx-background-color: derive(#1d1d1d,20%) ;
 }

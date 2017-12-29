@@ -1,15 +1,20 @@
 package sample.viewcontroller;
 
 import javafx.fxml.FXML;
+import javafx.geometry.BoundingBox;
+import javafx.geometry.Bounds;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import sample.Main;
 import sample.models.*;
+import sample.models.Robot;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -29,9 +34,11 @@ public class BoardController {
     @FXML
     private Canvas passiveCanvas;
     @FXML
-    private Pane stageGroup;
+    private BorderPane stageGroup;
     @FXML
     private StackPane holder;
+    @FXML
+    private HBox content;
 
     @FXML
     void initialize() {
@@ -47,9 +54,6 @@ public class BoardController {
         GraphicsContext activeCtx = activeCanvas.getGraphicsContext2D();
         GraphicsContext passiveCtx = passiveCanvas.getGraphicsContext2D();
 
-        stageGroup.getStyleClass().add("root");
-        holder.getStyleClass().add("canvas");
-
         // Drawing grid
         drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight);
 
@@ -59,9 +63,8 @@ public class BoardController {
         drawMotherRobot(passiveCtx, stage.getMotherRobot());
 
         // Event listener that is responsible for showing robot info on hover.
-        stageGroup.setOnMouseMoved(event -> {
+        passiveCanvas.setOnMouseMoved(event -> {
             Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
-
             clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
             if (activeRobot != null) {
@@ -72,7 +75,6 @@ public class BoardController {
             } else {
                 drawRobots(activeCtx, stage.getRobots());
             }
-
         });
 
         // Timer that allow for Antennas signal animation.
@@ -159,7 +161,7 @@ public class BoardController {
         final int hLineCount = (int) Math.floor((stageHeight + 1) / spacing);
         final int vLineCount = (int) Math.floor((stageWidth + 1) / spacing);
 
-        ctx.setStroke(Color.LIGHTGRAY);
+        ctx.setStroke(Color.DARKGRAY);
 
         for (int i = 0; i < hLineCount; i++) {
             ctx.strokeLine(0, i * spacing, stageWidth, i * spacing);
@@ -211,10 +213,12 @@ public class BoardController {
         constCanvas.setWidth(stageWidth);
         activeCanvas.setWidth(stageWidth);
         passiveCanvas.setWidth(stageWidth);
+        holder.setMaxWidth(stageWidth);
         // Setting height of all canvases
         constCanvas.setHeight(stageHeight);
         activeCanvas.setHeight(stageHeight);
         passiveCanvas.setHeight(stageHeight);
+        holder.setMaxHeight(stageHeight);
 
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
     }

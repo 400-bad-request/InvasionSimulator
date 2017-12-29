@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.BorderPane?>
 
-<Pane fx:id="stageGroup"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="sample.viewcontroller.BoardController"
-      stylesheets="@style.css">
+<?import javafx.scene.layout.HBox?>
+<BorderPane fx:id="stageGroup"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sample.viewcontroller.BoardController"
+            stylesheets="@style.css"
+            styleClass="root">
 
-    <StackPane fx:id="holder">
-        <Canvas
-                fx:id="constCanvas"
-        />
-        <Canvas
-                fx:id="activeCanvas"
-        />
-        <Canvas
-                fx:id="passiveCanvas"
-        />
-    </StackPane>
-</Pane>
+    <top>
+        <HBox prefHeight="50" styleClass="top_navbar">
+
+        </HBox>
+    </top>
+    <center>
+        <HBox fx:id="content" alignment="CENTER">
+            <StackPane fx:id="holder" styleClass="canvas_background">
+                <Canvas
+                        fx:id="constCanvas"
+                />
+                <Canvas
+                        fx:id="activeCanvas"
+                />
+                <Canvas
+                        fx:id="passiveCanvas"
+                />
+            </StackPane>
+        </HBox>
+    </center>
+</BorderPane>
