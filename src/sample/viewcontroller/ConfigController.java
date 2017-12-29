@@ -4,12 +4,14 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import sample.Main;
@@ -36,8 +38,7 @@ public class ConfigController {
     private TextField robotsDensity;
     @FXML
     private TextField division;
-    @FXML
-    private GridPane grid;
+
     //==================================================================================================================
 
     // HANDLER METHODS
@@ -48,7 +49,6 @@ public class ConfigController {
         Main.config = new Configuration();
         // Setting default values to text boxes
         setDefaultValues();
-        grid.getStyleClass().add("root_start");
     }
 
     public void submit(ActionEvent actionEvent) {
@@ -63,22 +63,27 @@ public class ConfigController {
         Main.config.division = Integer.parseInt(division.getText());
 
         try {
+            // Load new view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("board.fxml"));
-            Parent viewerPageParent = loader.load();
+            Parent root = loader.load();
             BoardController controller = loader.getController();
-            Scene viewerPageScene = new Scene(viewerPageParent);
-            Stage boardStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            // Get screen size of monitor
+            Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+            // Creating new scene
+            Scene newScene = new Scene(root, screenSize.getWidth(), screenSize.getHeight());
+            // Acquire stage
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             // Embedding new stage and configuring it's parameters
-            boardStage.setScene(viewerPageScene);
-            boardStage.setTitle("Visualization");
-            boardStage.setWidth(1000);
-            boardStage.setHeight(600);
-            // Overriden close request to perform timer stop and normal close action
-            boardStage.setOnCloseRequest(event -> {
+            stage.setMaximized(true);
+            stage.setScene(newScene);
+            stage.setTitle("Visualization");
+
+            // Overridden close request to perform timer stop and normal close action
+            stage.setOnCloseRequest(event -> {
                 controller.stopTimer();
                 Platform.exit();
             });
-            boardStage.show();
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

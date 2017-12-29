@@ -19,6 +19,9 @@
 
 .root_start {
     -fx-background-image: url("../../../../../assets/background.jpg");
+    -fx-background-position: center center;
+    -fx-background-size: cover;
+
 }
 
 .button {
