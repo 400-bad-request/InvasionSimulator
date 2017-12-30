@@ -10,14 +10,14 @@
 <?import javafx.scene.control.Button?>
 
 <?import javafx.scene.layout.Pane?>
-<BorderPane fx:id="fullStage"
-            xmlns:fx="http://javafx.com/fxml"
+<?import javafx.scene.Group?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.viewcontroller.BoardController"
             stylesheets="@style.css"
             styleClass="root">
 
     <top>
-        <HBox styleClass="top_navbar" spacing="10" alignment="TOP_LEFT">
+        <HBox styleClass="top_navbar" spacing="10">
             <padding><Insets top="10" bottom="10" left="10" right="10"/></padding>
 
             <fx:define>
@@ -26,27 +26,30 @@
 
             <ToggleButton styleClass="button" fx:id="regularViewButton" text="Regular View" onAction="#regularView" toggleGroup="$toggleGroup"/>
             <ToggleButton styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap" toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="simpleTriangulation" text="Method 1" onAction="#triangulationView" toggleGroup="$toggleGroup"/>
 
-            <Button styleClass="button" text="Next Model" onAction="#newModel"/>
 
             <Pane HBox.hgrow="ALWAYS" />
 
+            <Button styleClass="button" text="Next Model" onAction="#newModel"/>
             <Button styleClass="button" text="Back" onAction="#newConfig"/>
 
         </HBox>
     </top>
     <center>
-        <HBox fx:id="content" alignment="CENTER">
+        <HBox alignment="CENTER">
             <StackPane fx:id="holder" styleClass="canvas_background">
-                <Canvas
-                        fx:id="constCanvas"
-                />
-                <Canvas
-                        fx:id="activeCanvas"
-                />
-                <Canvas
-                        fx:id="passiveCanvas"
-                />
+                <Group fx:id="vizGroup">
+                    <Canvas
+                            fx:id="constCanvas"
+                    />
+                    <Canvas
+                            fx:id="activeCanvas"
+                    />
+                    <Canvas
+                            fx:id="passiveCanvas"
+                    />
+                </Group>
             </StackPane>
         </HBox>
     </center>

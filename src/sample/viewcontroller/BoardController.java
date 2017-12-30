@@ -1,20 +1,19 @@
 package sample.viewcontroller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import sample.Main;
@@ -53,6 +52,8 @@ public class BoardController {
     // Declaration stage data object that will hold all model information
     private StageObjects stage;
 
+    private Shape simpleTriangulationArea;
+
     // REFERENCE TO JAVA FX CANVAS OBJECTS
     //==================================================================================================================
 
@@ -60,9 +61,10 @@ public class BoardController {
     @FXML private Canvas activeCanvas;
     @FXML private Canvas passiveCanvas;
     @FXML private StackPane holder;
-    @FXML private HBox content;
+    @FXML private Group vizGroup;
     @FXML private ToggleButton regularViewButton;
     @FXML private ToggleButton heatMapButton;
+    @FXML private ToggleButton simpleTriangulation;
 
     // METHODS
     //==================================================================================================================
@@ -92,16 +94,13 @@ public class BoardController {
                 Robot activeRobot = this.robotOnHover(stage.getRobots(), event.getX(), event.getY());
                 this.clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
-                if (activeRobot != null) {
-
+                if (activeRobot == null) {
+                    this.drawRobots(activeCtx, stage.getRobots());
+                } else {
                     activeCtx.setFill(Color.BLACK);
                     activeRobot.draw(activeCtx);
                     activeCtx.setStroke(Color.BLACK);
                     activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
-
-                } else {
-
-                    this.drawRobots(activeCtx, stage.getRobots());
 
                 }
             }
@@ -137,16 +136,84 @@ public class BoardController {
     }
 
     private void activeRender() {
-
+        // Clearing active canvas
         this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
-
-        if(this.activeView.equals("heat_map")) {
-            this.drawHeatMap(activeCtx, stage.getRobots());
-        } else if(this.activeView.equals("regular")) {
-            this.drawRobots(activeCtx, stage.getRobots());
+        // Removing simple triangulation positive area from scene
+        if( this.simpleTriangulationArea != null ) {
+            vizGroup.getChildren().remove(this.simpleTriangulationArea);
         }
-
+        // Loading appropriate visualization
+        switch (this.activeView) {
+            case "heat_map":
+                this.drawHeatMap(activeCtx, stage.getRobots());
+                break;
+            case "regular":
+                this.drawRobots(activeCtx, stage.getRobots());
+                break;
+            case "triangulation":
+                this.drawTriangulation(activeCtx, stage.getRobots(), stage.getAntennas());
+                break;
+        }
     }
+
+    private void drawTriangulation(GraphicsContext ctx, List<Robot> robots, List<Antenna> antennas) {
+
+        Circle c1 = new Circle();
+
+        c1.setRadius(Math.min(
+                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(1).getLocation()),
+                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(2).getLocation())
+        ));
+
+        c1.setCenterX(antennas.get(0).getLocation().getX());
+        c1.setCenterY(antennas.get(0).getLocation().getY());
+
+        Circle c2 = new Circle();
+
+        c2.setRadius(Math.min(
+                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(0).getLocation()),
+                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(2).getLocation())
+        ));
+
+        c2.setCenterX(antennas.get(1).getLocation().getX());
+        c2.setCenterY(antennas.get(1).getLocation().getY());
+
+        Circle c3 = new Circle();
+
+        c3.setRadius(Math.min(
+                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(0).getLocation()),
+                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(1).getLocation())
+        ));
+
+        c3.setCenterX(antennas.get(2).getLocation().getX());
+        c3.setCenterY(antennas.get(2).getLocation().getY());
+
+        Rectangle r1 = new Rectangle();
+        r1.setX(0);
+        r1.setY(0);
+        r1.setHeight(Main.config.stageHeight);
+        r1.setWidth(Main.config.stageWidth);
+
+        simpleTriangulationArea = Shape.intersect(c1, c2);
+        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, c3);
+        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, r1);
+
+        simpleTriangulationArea.setFill(Color.rgb(255, 255, 255, 0.2));
+        simpleTriangulationArea.setStroke(Color.WHITE);
+
+        simpleTriangulationArea.setCursor(Cursor.CROSSHAIR);
+
+        vizGroup.getChildren().addAll(simpleTriangulationArea);
+    }
+
+    private double calculateDistance2P(Location point_1, Location point_2) {
+
+        return  Math.sqrt(
+                Math.pow(Math.abs(point_1.getX() - point_2.getX()), 2) +
+                Math.pow(Math.abs(point_1.getY() - point_2.getY()), 2)
+        );
+    }
+
 
     /**
      * Method is used for visualisation of Antennas location.
@@ -303,6 +370,16 @@ public class BoardController {
             regularViewButton.setSelected(true);
         } else {
             this.activeView = "regular";
+            this.activeRender();
+        }
+    }
+
+    public void triangulationView() {
+        // Change value of active view to regular
+        if (this.activeView.equals("triangulation")) {
+            simpleTriangulation.setSelected(true);
+        } else {
+            this.activeView = "triangulation";
             this.activeRender();
         }
     }
