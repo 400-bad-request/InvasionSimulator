@@ -46,7 +46,9 @@ public class ConfigController {
     @FXML
     public void initialize() {
         // Assign value to config field
-        Main.config = new Configuration();
+        if (Main.config == null) {
+            Main.config = new Configuration();
+        }
         // Setting default values to text boxes
         setDefaultValues();
     }

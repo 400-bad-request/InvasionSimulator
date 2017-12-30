@@ -56,6 +56,13 @@ public class Robot {
                 2 * visualizationRadius,
                 2 * visualizationRadius
         );
+
+        ctx.strokeOval(
+                location.getX() - visualizationRadius,
+                location.getY() - visualizationRadius,
+                2 * visualizationRadius,
+                2 * visualizationRadius
+        );
     }
 
     /**

@@ -1,5 +1,5 @@
 .canvas_background {
-    -fx-background-color: white ;
+    -fx-background-color: derive(#1d1d1d,10%) ;
     -fx-border-color: black;
     -fx-border-width: 1;
     -fx-border-style: solid;
@@ -46,7 +46,7 @@
 }
 
 .top_navbar {
-    -fx-background-color: derive(#1d1d1d,20%) ;
+    -fx-background-color: derive(#1d1d1d,10%) ;
 }
 
 .text_field {

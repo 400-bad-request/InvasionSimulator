@@ -1,16 +1,27 @@
 package sample.viewcontroller;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import sample.Main;
 import sample.models.*;
 import sample.models.Robot;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -49,7 +60,9 @@ public class BoardController {
     @FXML private Canvas activeCanvas;
     @FXML private Canvas passiveCanvas;
     @FXML private StackPane holder;
+    @FXML private HBox content;
     @FXML private ToggleButton regularViewButton;
+    @FXML private ToggleButton heatMapButton;
 
     // METHODS
     //==================================================================================================================
@@ -60,31 +73,35 @@ public class BoardController {
         // Creating stage object that will produce stage content information.
         this.stage = new StageObjects(Main.config);
 
-        // Setting size, position and styling of components inside stage
-        setStage(Main.config.stageWidth, Main.config.stageHeight);
-
         // Acquisition of canvas context
         this.constCtx = constCanvas.getGraphicsContext2D();
         this.activeCtx = activeCanvas.getGraphicsContext2D();
         this.passiveCtx = passiveCanvas.getGraphicsContext2D();
 
+        // Setting size, position and styling of components inside stage
+        setStage(Main.config.stageWidth, Main.config.stageHeight);
+
         // Rendering visualization
         this.fullRender();
 
         // Event listener that is responsible for showing robot info on hover.
-        passiveCanvas.setOnMouseMoved(event -> {
+        this.passiveCanvas.setOnMouseMoved(event -> {
 
-            if(this.activeView == "regular") {
-                Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
-                clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
+            if(this.activeView.equals("regular")) {
+
+                Robot activeRobot = this.robotOnHover(stage.getRobots(), event.getX(), event.getY());
+                this.clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
                 if (activeRobot != null) {
-                    activeCtx.setFill(Color.BLUE);
-                    activeRobot.draw(activeCtx);
 
+                    activeCtx.setFill(Color.BLACK);
+                    activeRobot.draw(activeCtx);
                     activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
+
                 } else {
-                    drawRobots(activeCtx, stage.getRobots());
+
+                    this.drawRobots(activeCtx, stage.getRobots());
+
                 }
             }
         });
@@ -122,9 +139,9 @@ public class BoardController {
 
         this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
-        if(this.activeView == "heat_map") {
+        if(this.activeView.equals("heat_map")) {
             this.drawHeatMap(activeCtx, stage.getRobots());
-        } else if(this.activeView == "regular") {
+        } else if(this.activeView.equals("regular")) {
             this.drawRobots(activeCtx, stage.getRobots());
         }
 
@@ -138,13 +155,6 @@ public class BoardController {
      */
     private void drawAntennas(GraphicsContext ctx, List<Antenna> antennas) {
 
-        for (int i = 0; i < antennas.size(); i++) {
-            ctx.setFill(antennasColors.get(i));
-            ctx.setStroke(antennasColors.get(i));
-            antennas.get(i).draw(ctx);
-        }
-
-
         ctx.setStroke(Color.RED);
         ctx.setFill(Color.rgb(255, 0, 0, 0.2));
 
@@ -157,6 +167,12 @@ public class BoardController {
                 new double[]{antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX()},
                 new double[]{antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY()}, 3
         );
+
+        for (int i = 0; i < antennas.size(); i++) {
+            ctx.setFill(antennasColors.get(i));
+            ctx.setStroke(antennasColors.get(i));
+            antennas.get(i).draw(ctx);
+        }
     }
 
     /**
@@ -167,7 +183,8 @@ public class BoardController {
      */
     private void drawRobots(GraphicsContext ctx, List<Robot> robots) {
         // Setting visualization color.
-        ctx.setFill(Color.BLUE);
+        ctx.setStroke(Color.DARKGRAY);
+        ctx.setFill(Color.BLACK);
 
         for (Robot element : robots) {
             element.draw(ctx);
@@ -182,7 +199,8 @@ public class BoardController {
      */
     private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot) {
         // Setting visualization color.
-        ctx.setFill(Color.GREEN);
+        ctx.setFill(Color.WHITE);
+        ctx.setStroke(Color.BLACK);
         motherRobot.draw(ctx);
     }
 
@@ -204,13 +222,13 @@ public class BoardController {
         final int hLineCount = (int) Math.floor((stageHeight + 1) / spacing);
         final int vLineCount = (int) Math.floor((stageWidth + 1) / spacing);
 
-        ctx.setStroke(Color.DARKGRAY);
+        ctx.setStroke(Color.WHITE);
 
-        for (int i = 0; i < hLineCount; i++) {
+        for (int i = 1; i < hLineCount; i++) {
             ctx.strokeLine(0, i * spacing, stageWidth, i * spacing);
         }
 
-        for (int i = 0; i < vLineCount; i++) {
+        for (int i = 1; i < vLineCount; i++) {
             ctx.strokeLine(i * spacing, 0, i * spacing, stageHeight);
         }
     }
@@ -252,6 +270,7 @@ public class BoardController {
      * @param stageHeight height of field
      */
     private void setStage(int stageWidth, int stageHeight) {
+
         // Setting width of all canvases
         constCanvas.setWidth(stageWidth);
         activeCanvas.setWidth(stageWidth);
@@ -269,14 +288,54 @@ public class BoardController {
 
     public void heatMap() {
         // Change value of active view to heat map
-        this.activeView = "heat_map";
-        this.activeRender();
+        if (this.activeView.equals("heat_map")) {
+            heatMapButton.setSelected(true);
+        } else {
+            this.activeView = "heat_map";
+            this.activeRender();
+        }
     }
 
     public void regularView() {
         // Change value of active view to regular
-        this.activeView = "regular";
-        this.activeRender();
+        if (this.activeView.equals("regular")) {
+            regularViewButton.setSelected(true);
+        } else {
+            this.activeView = "regular";
+            this.activeRender();
+        }
+    }
+
+    public void newModel() {
+        // Creating stage object that will produce stage content information.
+        this.stage = new StageObjects(Main.config);
+        // Rendering visualization
+        this.fullRender();
+    }
+
+    public void newConfig(ActionEvent actionEvent) {
+        try {
+            // Load new view
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("config.fxml"));
+            Parent root = loader.load();
+
+            // Get screen size of monitor
+            Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+            // Creating new scene
+            Scene newScene = new Scene(root, screenSize.getWidth(), screenSize.getHeight());
+            // Acquire stage
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            // Embedding new stage and configuring it's parameters
+            stage.setMaximized(true);
+            stage.setScene(newScene);
+            stage.setTitle("Model Configuration");
+
+            this.stopTimer();
+
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void drawHeatMap(GraphicsContext ctx, List<Robot> robots) {
@@ -314,6 +373,7 @@ public class BoardController {
 
 
             ctx.setFill(Color.rgb(red,green,blue));
+            ctx.setStroke(Color.BLACK);
             element.draw(ctx);
         }
     }
