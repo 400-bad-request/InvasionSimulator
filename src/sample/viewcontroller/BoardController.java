@@ -96,6 +96,7 @@ public class BoardController {
 
                     activeCtx.setFill(Color.BLACK);
                     activeRobot.draw(activeCtx);
+                    activeCtx.setStroke(Color.BLACK);
                     activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
 
                 } else {
@@ -155,8 +156,8 @@ public class BoardController {
      */
     private void drawAntennas(GraphicsContext ctx, List<Antenna> antennas) {
 
-        ctx.setStroke(Color.RED);
-        ctx.setFill(Color.rgb(255, 0, 0, 0.2));
+        ctx.setStroke(Color.WHITE);
+        ctx.setFill(Color.rgb(255, 255, 255, 0.2));
 
         ctx.fillPolygon(
                 new double[]{antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX()},
@@ -170,7 +171,7 @@ public class BoardController {
 
         for (int i = 0; i < antennas.size(); i++) {
             ctx.setFill(antennasColors.get(i));
-            ctx.setStroke(antennasColors.get(i));
+            ctx.setStroke(Color.WHITE);
             antennas.get(i).draw(ctx);
         }
     }
