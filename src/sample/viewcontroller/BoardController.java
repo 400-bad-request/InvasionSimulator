@@ -8,7 +8,6 @@ import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -433,7 +432,6 @@ public class BoardController {
         simpleTriangulationArea.setStroke(Color.WHITE);
 
         simpleTriangulationArea.setCursor(Cursor.CROSSHAIR);
-
         vizGroup.getChildren().addAll(simpleTriangulationArea);
     }
 
