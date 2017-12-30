@@ -18,56 +18,63 @@ import java.util.*;
  */
 public class BoardController {
 
+    // PROPERTIES
+    //==================================================================================================================
+
+    // Timer allowing animation execution
     private Timer timer = new Timer();
-    private ArrayList<Color> antennasColors = new ArrayList<Color>(Arrays.asList(
+
+    // Array that holds colors assigned to appropriate antennas
+    private ArrayList<Color> antennasColors = new ArrayList<>(Arrays.asList(
             Color.rgb(255,0,0),
             Color.rgb(0,255,0),
             Color.rgb(0,0,255)
     ));
-    private boolean heatMapActive = false;
 
-    // Reference to the JavaFX Canvas objects
-    @FXML
-    private Canvas constCanvas;
-    @FXML
-    private Canvas activeCanvas;
-    @FXML
-    private Canvas passiveCanvas;
-    @FXML
-    private StackPane holder;
-    @FXML
-    private ToggleButton heatMapButton;
+    // String that represents type of view that is currently displayed on canvas
+    private String activeView = "regular";
 
+    // Declaration of graphics contexts for canvases
+    private GraphicsContext constCtx;
+    private GraphicsContext activeCtx;
+    private GraphicsContext passiveCtx;
+
+    // Declaration stage data object that will hold all model information
+    private StageObjects stage;
+
+    // REFERENCE TO JAVA FX CANVAS OBJECTS
+    //==================================================================================================================
+
+    @FXML private Canvas constCanvas;
+    @FXML private Canvas activeCanvas;
+    @FXML private Canvas passiveCanvas;
+    @FXML private StackPane holder;
+    @FXML private ToggleButton regularViewButton;
+
+    // METHODS
+    //==================================================================================================================
 
     @FXML
     void initialize() {
 
         // Creating stage object that will produce stage content information.
-        StageObjects stage = new StageObjects(Main.config);
+        this.stage = new StageObjects(Main.config);
 
-        // Setting canvas width and height
+        // Setting size, position and styling of components inside stage
         setStage(Main.config.stageWidth, Main.config.stageHeight);
 
         // Acquisition of canvas context
-        GraphicsContext constCtx = constCanvas.getGraphicsContext2D();
-        GraphicsContext activeCtx = activeCanvas.getGraphicsContext2D();
-        GraphicsContext passiveCtx = passiveCanvas.getGraphicsContext2D();
+        this.constCtx = constCanvas.getGraphicsContext2D();
+        this.activeCtx = activeCanvas.getGraphicsContext2D();
+        this.passiveCtx = passiveCanvas.getGraphicsContext2D();
 
-        // Drawing grid
-        drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight);
-
-        // Drawing stage content
-        drawAntennas(passiveCtx, stage.getAntennas());
-        drawRobots(activeCtx, stage.getRobots());
-        drawMotherRobot(passiveCtx, stage.getMotherRobot());
+        // Rendering visualization
+        this.fullRender();
 
         // Event listener that is responsible for showing robot info on hover.
         passiveCanvas.setOnMouseMoved(event -> {
 
-            if(this.heatMapActive) {
-                clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
-                this.drawHeatMap(activeCtx, stage.getRobots());
-            } else {
+            if(this.activeView == "regular") {
                 Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
                 clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
@@ -91,6 +98,36 @@ public class BoardController {
                 drawMotherRobot(passiveCtx, stage.getMotherRobot());
             }
         }, 0, 100);
+    }
+
+    private void fullRender() {
+
+        this.clearCanvas(this.passiveCtx, Main.config.stageWidth, Main.config.stageHeight);
+        this.clearCanvas(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
+
+        // Drawing grid
+        this.drawGrid(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
+
+        // Draw antennas
+        this.drawAntennas(this.passiveCtx, stage.getAntennas());
+
+        // Draw mother robot
+        this.drawMotherRobot(this.passiveCtx, stage.getMotherRobot());
+
+        // Rendering visualization on active stage
+        this.activeRender();
+    }
+
+    private void activeRender() {
+
+        this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
+
+        if(this.activeView == "heat_map") {
+            this.drawHeatMap(activeCtx, stage.getRobots());
+        } else if(this.activeView == "regular") {
+            this.drawRobots(activeCtx, stage.getRobots());
+        }
+
     }
 
     /**
@@ -227,18 +264,19 @@ public class BoardController {
         holder.setMaxHeight(stageHeight);
 
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
+        regularViewButton.setSelected(true);
     }
 
     public void heatMap() {
-        //Change value of heat map flag, what will turns on or off heatMap view
-        this.heatMapActive = !this.heatMapActive;
-        System.out.println(heatMapButton.isSelected());
+        // Change value of active view to heat map
+        this.activeView = "heat_map";
+        this.activeRender();
     }
 
     public void regularView() {
-        //Change value of heat map flag, what will turns on or off heatMap view
-        this.heatMapActive = !this.heatMapActive;
-        System.out.println(heatMapButton.isSelected());
+        // Change value of active view to regular
+        this.activeView = "regular";
+        this.activeRender();
     }
 
     private void drawHeatMap(GraphicsContext ctx, List<Robot> robots) {
