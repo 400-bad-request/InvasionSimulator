@@ -5,18 +5,25 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.control.Button?>
 <?import javafx.geometry.Insets?>
-<BorderPane fx:id="stageGroup"
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<BorderPane fx:id="fullStage"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.viewcontroller.BoardController"
             stylesheets="@style.css"
             styleClass="root">
 
     <top>
-        <HBox styleClass="top_navbar">
-            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
-            <Button styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap"/>
+        <HBox styleClass="top_navbar" spacing="10">
+            <padding><Insets top="10" bottom="10" left="10" right="10"/></padding>
+
+            <fx:define>
+                <ToggleGroup fx:id="toggleGroup"/>
+            </fx:define>
+
+            <ToggleButton styleClass="button" fx:id="regularViewButton" text="Regular View" onAction="#regularView" toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap" toggleGroup="$toggleGroup"/>
 
         </HBox>
     </top>

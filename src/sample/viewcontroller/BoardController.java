@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import sample.Main;
@@ -36,7 +36,7 @@ public class BoardController {
     @FXML
     private StackPane holder;
     @FXML
-    private Button heatMapButton;
+    private ToggleButton heatMapButton;
 
 
     @FXML
@@ -232,6 +232,13 @@ public class BoardController {
     public void heatMap() {
         //Change value of heat map flag, what will turns on or off heatMap view
         this.heatMapActive = !this.heatMapActive;
+        System.out.println(heatMapButton.isSelected());
+    }
+
+    public void regularView() {
+        //Change value of heat map flag, what will turns on or off heatMap view
+        this.heatMapActive = !this.heatMapActive;
+        System.out.println(heatMapButton.isSelected());
     }
 
     private void drawHeatMap(GraphicsContext ctx, List<Robot> robots) {
@@ -267,9 +274,6 @@ public class BoardController {
             int green = (int) (255 * Math.abs(element.getSignalStrengths().get(1) - minY.getSignalStrengths().get(1)) / deltaY);
             int blue = (int) (255 * Math.abs(element.getSignalStrengths().get(2) - minZ.getSignalStrengths().get(2)) / deltaZ);
 
-//            System.out.println(red);
-//            System.out.println(green);
-//            System.out.println(blue);
 
             ctx.setFill(Color.rgb(red,green,blue));
             element.draw(ctx);
