@@ -129,7 +129,7 @@ public class Antenna {
                 2 * visualizationOuterRadius
         );
 
-        visualizationOuterRadius = (visualizationOuterRadius + 2) % 20;
+        visualizationOuterRadius = (visualizationOuterRadius + 2) % 40;
     }
     //==================================================================================================================
 }

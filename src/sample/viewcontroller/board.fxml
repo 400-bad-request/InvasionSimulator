@@ -5,6 +5,8 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.geometry.Insets?>
 <BorderPane fx:id="stageGroup"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="sample.viewcontroller.BoardController"
@@ -12,7 +14,9 @@
             styleClass="root">
 
     <top>
-        <HBox prefHeight="50" styleClass="top_navbar">
+        <HBox styleClass="top_navbar">
+            <padding><Insets top="20" bottom="20" left="20" right="20"/></padding>
+            <Button styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap"/>
 
         </HBox>
     </top>

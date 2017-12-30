@@ -4,8 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import sample.Main;
@@ -21,10 +20,11 @@ public class BoardController {
 
     private Timer timer = new Timer();
     private ArrayList<Color> antennasColors = new ArrayList<Color>(Arrays.asList(
-            Color.rgb(0,0,255),
+            Color.rgb(255,0,0),
             Color.rgb(0,255,0),
-            Color.rgb(255,0,0)
+            Color.rgb(0,0,255)
     ));
+    private boolean heatMapActive = false;
 
     // Reference to the JavaFX Canvas objects
     @FXML
@@ -34,11 +34,10 @@ public class BoardController {
     @FXML
     private Canvas passiveCanvas;
     @FXML
-    private BorderPane stageGroup;
-    @FXML
     private StackPane holder;
     @FXML
-    private HBox content;
+    private Button heatMapButton;
+
 
     @FXML
     void initialize() {
@@ -64,16 +63,22 @@ public class BoardController {
 
         // Event listener that is responsible for showing robot info on hover.
         passiveCanvas.setOnMouseMoved(event -> {
-            Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
-            clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
 
-            if (activeRobot != null) {
-                activeCtx.setFill(Color.BLUE);
-                activeRobot.draw(activeCtx);
-
-                activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
+            if(this.heatMapActive) {
+                clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
+                this.drawHeatMap(activeCtx, stage.getRobots());
             } else {
-                drawRobots(activeCtx, stage.getRobots());
+                Robot activeRobot = robotOnHover(stage.getRobots(), event.getX(), event.getY());
+                clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
+
+                if (activeRobot != null) {
+                    activeCtx.setFill(Color.BLUE);
+                    activeRobot.draw(activeCtx);
+
+                    activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
+                } else {
+                    drawRobots(activeCtx, stage.getRobots());
+                }
             }
         });
 
@@ -222,6 +227,53 @@ public class BoardController {
         holder.setMaxHeight(stageHeight);
 
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
+    }
+
+    public void heatMap() {
+        //Change value of heat map flag, what will turns on or off heatMap view
+        this.heatMapActive = !this.heatMapActive;
+    }
+
+    private void drawHeatMap(GraphicsContext ctx, List<Robot> robots) {
+
+        Robot minX = robots.get(0);
+        Robot maxX = robots.get(0);
+
+        Robot minY = robots.get(0);
+        Robot maxY = robots.get(0);
+
+        Robot minZ = robots.get(0);
+        Robot maxZ = robots.get(0);
+
+        for (Robot element : robots) {
+
+            if (element.getSignalStrengths().get(0) < minX.getSignalStrengths().get(0)) minX = element;
+            if (element.getSignalStrengths().get(0) > maxX.getSignalStrengths().get(0)) maxX = element;
+
+            if (element.getSignalStrengths().get(1) < minY.getSignalStrengths().get(1)) minY = element;
+            if (element.getSignalStrengths().get(1) > maxY.getSignalStrengths().get(1)) maxY = element;
+
+            if (element.getSignalStrengths().get(2) < minZ.getSignalStrengths().get(2)) minZ = element;
+            if (element.getSignalStrengths().get(2) > maxZ.getSignalStrengths().get(2)) maxZ = element;
+        }
+
+        double deltaX = Math.abs(maxX.getSignalStrengths().get(0) - minX.getSignalStrengths().get(0));
+        double deltaY = Math.abs(maxY.getSignalStrengths().get(1) - minY.getSignalStrengths().get(1));
+        double deltaZ = Math.abs(maxZ.getSignalStrengths().get(2) - minZ.getSignalStrengths().get(2));
+
+        for (Robot element : robots) {
+
+            int red = (int) (255 * Math.abs(element.getSignalStrengths().get(0) - minX.getSignalStrengths().get(0)) / deltaX);
+            int green = (int) (255 * Math.abs(element.getSignalStrengths().get(1) - minY.getSignalStrengths().get(1)) / deltaY);
+            int blue = (int) (255 * Math.abs(element.getSignalStrengths().get(2) - minZ.getSignalStrengths().get(2)) / deltaZ);
+
+//            System.out.println(red);
+//            System.out.println(green);
+//            System.out.println(blue);
+
+            ctx.setFill(Color.rgb(red,green,blue));
+            element.draw(ctx);
+        }
     }
 
     public void stopTimer() {

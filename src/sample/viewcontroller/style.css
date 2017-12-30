@@ -40,6 +40,11 @@
     -fx-background-color: #3a3a3a;
 }
 
+.button:pressed, .button:default:hover:pressed {
+    -fx-background-color: white;
+    -fx-text-fill: #1d1d1d;
+}
+
 .top_navbar {
     -fx-background-color: derive(#1d1d1d,20%) ;
 }
