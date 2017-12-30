@@ -117,6 +117,9 @@ public class BoardController {
         }, 0, 100);
     }
 
+    /**
+     * Method is used to load full visualization on canvas.
+     */
     private void fullRender() {
 
         this.clearCanvas(this.passiveCtx, Main.config.stageWidth, Main.config.stageHeight);
@@ -135,6 +138,9 @@ public class BoardController {
         this.activeRender();
     }
 
+    /**
+     * Method is used to load active view on canvas.
+     */
     private void activeRender() {
         // Clearing active canvas
         this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
@@ -155,65 +161,6 @@ public class BoardController {
                 break;
         }
     }
-
-    private void drawTriangulation(GraphicsContext ctx, List<Robot> robots, List<Antenna> antennas) {
-
-        Circle c1 = new Circle();
-
-        c1.setRadius(Math.min(
-                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(1).getLocation()),
-                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(2).getLocation())
-        ));
-
-        c1.setCenterX(antennas.get(0).getLocation().getX());
-        c1.setCenterY(antennas.get(0).getLocation().getY());
-
-        Circle c2 = new Circle();
-
-        c2.setRadius(Math.min(
-                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(0).getLocation()),
-                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(2).getLocation())
-        ));
-
-        c2.setCenterX(antennas.get(1).getLocation().getX());
-        c2.setCenterY(antennas.get(1).getLocation().getY());
-
-        Circle c3 = new Circle();
-
-        c3.setRadius(Math.min(
-                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(0).getLocation()),
-                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(1).getLocation())
-        ));
-
-        c3.setCenterX(antennas.get(2).getLocation().getX());
-        c3.setCenterY(antennas.get(2).getLocation().getY());
-
-        Rectangle r1 = new Rectangle();
-        r1.setX(0);
-        r1.setY(0);
-        r1.setHeight(Main.config.stageHeight);
-        r1.setWidth(Main.config.stageWidth);
-
-        simpleTriangulationArea = Shape.intersect(c1, c2);
-        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, c3);
-        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, r1);
-
-        simpleTriangulationArea.setFill(Color.rgb(255, 255, 255, 0.2));
-        simpleTriangulationArea.setStroke(Color.WHITE);
-
-        simpleTriangulationArea.setCursor(Cursor.CROSSHAIR);
-
-        vizGroup.getChildren().addAll(simpleTriangulationArea);
-    }
-
-    private double calculateDistance2P(Location point_1, Location point_2) {
-
-        return  Math.sqrt(
-                Math.pow(Math.abs(point_1.getX() - point_2.getX()), 2) +
-                Math.pow(Math.abs(point_1.getY() - point_2.getY()), 2)
-        );
-    }
-
 
     /**
      * Method is used for visualisation of Antennas location.
@@ -349,11 +296,16 @@ public class BoardController {
         activeCanvas.setHeight(stageHeight);
         passiveCanvas.setHeight(stageHeight);
         holder.setMaxHeight(stageHeight);
-
+        // Change the appearance of the cursor over the canvas
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
+        // Marking the default view button as pressed
         regularViewButton.setSelected(true);
     }
 
+    /**
+     * Method that is executed after clicking Heat Map button in view.
+     * Method loads Heat Map on canvas.
+     */
     public void heatMap() {
         // Change value of active view to heat map
         if (this.activeView.equals("heat_map")) {
@@ -364,6 +316,10 @@ public class BoardController {
         }
     }
 
+    /**
+     * Method that is executed after clicking Regular View button in view.
+     * Method loads Regular View on canvas.
+     */
     public void regularView() {
         // Change value of active view to regular
         if (this.activeView.equals("regular")) {
@@ -374,6 +330,10 @@ public class BoardController {
         }
     }
 
+    /**
+     * Method that is executed after clicking Method 1 button in view.
+     * Method loads Simple Triangulation visualization on canvas.
+     */
     public void triangulationView() {
         // Change value of active view to regular
         if (this.activeView.equals("triangulation")) {
@@ -384,6 +344,10 @@ public class BoardController {
         }
     }
 
+    /**
+     * Method that is executed after clicking New Model button in view.
+     * Method creates new Stage Objects instance, and reload visualization for new data.
+     */
     public void newModel() {
         // Creating stage object that will produce stage content information.
         this.stage = new StageObjects(Main.config);
@@ -391,6 +355,11 @@ public class BoardController {
         this.fullRender();
     }
 
+    /**
+     * Method that is executed after clicking Back button in view.
+     * Method load Configuration Scene on stage.
+     * @param actionEvent event triggered after Back button click
+     */
     public void newConfig(ActionEvent actionEvent) {
         try {
             // Load new view
@@ -407,13 +376,73 @@ public class BoardController {
             stage.setMaximized(true);
             stage.setScene(newScene);
             stage.setTitle("Model Configuration");
-
+            // Timer shot down
             this.stopTimer();
 
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // TODO: REFACTOR OF CODE BELOW.
+
+    private void drawTriangulation(GraphicsContext ctx, List<Robot> robots, List<Antenna> antennas) {
+
+        Circle c1 = new Circle();
+
+        c1.setRadius(Math.min(
+                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(1).getLocation()),
+                calculateDistance2P(antennas.get(0).getLocation(), antennas.get(2).getLocation())
+        ));
+
+        c1.setCenterX(antennas.get(0).getLocation().getX());
+        c1.setCenterY(antennas.get(0).getLocation().getY());
+
+        Circle c2 = new Circle();
+
+        c2.setRadius(Math.min(
+                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(0).getLocation()),
+                calculateDistance2P(antennas.get(1).getLocation(), antennas.get(2).getLocation())
+        ));
+
+        c2.setCenterX(antennas.get(1).getLocation().getX());
+        c2.setCenterY(antennas.get(1).getLocation().getY());
+
+        Circle c3 = new Circle();
+
+        c3.setRadius(Math.min(
+                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(0).getLocation()),
+                calculateDistance2P(antennas.get(2).getLocation(), antennas.get(1).getLocation())
+        ));
+
+        c3.setCenterX(antennas.get(2).getLocation().getX());
+        c3.setCenterY(antennas.get(2).getLocation().getY());
+
+        Rectangle r1 = new Rectangle();
+        r1.setX(0);
+        r1.setY(0);
+        r1.setHeight(Main.config.stageHeight);
+        r1.setWidth(Main.config.stageWidth);
+
+        simpleTriangulationArea = Shape.intersect(c1, c2);
+        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, c3);
+        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, r1);
+
+        simpleTriangulationArea.setFill(Color.rgb(255, 255, 255, 0.2));
+        simpleTriangulationArea.setStroke(Color.WHITE);
+
+        simpleTriangulationArea.setCursor(Cursor.CROSSHAIR);
+
+        vizGroup.getChildren().addAll(simpleTriangulationArea);
+    }
+
+    private double calculateDistance2P(Location point_1, Location point_2) {
+
+        return  Math.sqrt(
+                Math.pow(Math.abs(point_1.getX() - point_2.getX()), 2) +
+                        Math.pow(Math.abs(point_1.getY() - point_2.getY()), 2)
+        );
     }
 
     private void drawHeatMap(GraphicsContext ctx, List<Robot> robots) {
