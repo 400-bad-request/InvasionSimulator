@@ -7,6 +7,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -42,6 +43,8 @@ public class BoardController {
 
     // String that represents type of view that is currently displayed on canvas
     private String activeView = "regular";
+    // Flag that indicate whether grid will be rendered
+    private boolean gridActive = true;
 
     // Declaration of graphics contexts for canvases
     private GraphicsContext constCtx;
@@ -64,6 +67,7 @@ public class BoardController {
     @FXML private ToggleButton regularViewButton;
     @FXML private ToggleButton heatMapButton;
     @FXML private ToggleButton simpleTriangulation;
+    @FXML private Button gridButton;
 
     // METHODS
     //==================================================================================================================
@@ -125,7 +129,9 @@ public class BoardController {
         this.clearCanvas(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
 
         // Drawing grid
-        this.drawGrid(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
+        if (gridActive) {
+            this.drawGrid(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
+        }
 
         // Draw antennas
         this.drawAntennas(this.passiveCtx, stage.getAntennas());
@@ -299,6 +305,11 @@ public class BoardController {
         passiveCanvas.setCursor(Cursor.CROSSHAIR);
         // Marking the default view button as pressed
         regularViewButton.setSelected(true);
+        if (this.gridActive) {
+            gridButton.setText("Grid on");
+        } else {
+            gridButton.setText("Grid off");
+        }
     }
 
     /**
@@ -352,6 +363,19 @@ public class BoardController {
         this.stage = new StageObjects(Main.config);
         // Rendering visualization
         this.fullRender();
+    }
+
+    public void gridView() {
+
+        if(this.gridActive) {
+            this.clearCanvas(constCtx, Main.config.stageWidth, Main.config.stageHeight);
+            gridButton.setText("Grid off");
+        } else {
+            this.drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight);
+            gridButton.setText("Grid on");
+        }
+
+        this.gridActive = !this.gridActive;
     }
 
     /**

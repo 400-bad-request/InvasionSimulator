@@ -32,6 +32,7 @@
             <Pane HBox.hgrow="ALWAYS" />
 
             <Button styleClass="button" text="Next Model" onAction="#newModel"/>
+            <Button styleClass="button" fx:id="gridButton" onAction="#gridView" prefWidth="120"/>
             <Button styleClass="button" text="Back" onAction="#newConfig"/>
 
         </HBox>
