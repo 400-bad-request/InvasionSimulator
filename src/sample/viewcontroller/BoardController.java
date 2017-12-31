@@ -12,6 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Screen;
@@ -54,7 +55,11 @@ public class BoardController {
     // Declaration stage data object that will hold all model information
     private StageObjects stage;
 
-    private Shape simpleTriangulationArea;
+    // Shapes used for visualization
+    private Shape antennasTriangle;
+    private Shape simpleTriangulationAreaTP;
+    private Shape simpleTriangulationAreaFP;
+    private Shape simpleTriangulationAreaFN;
 
     // REFERENCE TO JAVA FX CANVAS OBJECTS
     //==================================================================================================================
@@ -150,8 +155,8 @@ public class BoardController {
         // Clearing active canvas
         this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
         // Removing simple triangulation positive area from scene
-        if( this.simpleTriangulationArea != null ) {
-            vizGroup.getChildren().remove(this.simpleTriangulationArea);
+        if( this.simpleTriangulationAreaTP != null && this.simpleTriangulationAreaFP != null && this.simpleTriangulationAreaFN != null) {
+            vizGroup.getChildren().removeAll(this.simpleTriangulationAreaTP, this.simpleTriangulationAreaFP, this.simpleTriangulationAreaFN);
         }
         // Loading appropriate visualization
         switch (this.activeView) {
@@ -187,6 +192,14 @@ public class BoardController {
                 new double[]{antennas.get(0).getLocation().getX(), antennas.get(1).getLocation().getX(), antennas.get(2).getLocation().getX()},
                 new double[]{antennas.get(0).getLocation().getY(), antennas.get(1).getLocation().getY(), antennas.get(2).getLocation().getY()}, 3
         );
+
+        Polygon polygon = new Polygon();
+        polygon.getPoints().addAll(new Double[]{
+                antennas.get(0).getLocation().getX(), antennas.get(0).getLocation().getY(),
+                antennas.get(1).getLocation().getX(), antennas.get(1).getLocation().getY(),
+                antennas.get(2).getLocation().getX(), antennas.get(2).getLocation().getY() });
+
+        this.antennasTriangle = polygon;
 
         for (int i = 0; i < antennas.size(); i++) {
             ctx.setFill(antennasColors.get(i));
@@ -448,15 +461,26 @@ public class BoardController {
         r1.setHeight(Main.config.stageHeight);
         r1.setWidth(Main.config.stageWidth);
 
-        simpleTriangulationArea = Shape.intersect(c1, c2);
-        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, c3);
-        simpleTriangulationArea = Shape.intersect(simpleTriangulationArea, r1);
+        Shape area = Shape.intersect(c1, c2);
+        area = Shape.intersect(area, c3);
+        area = Shape.intersect(area, r1);
 
-        simpleTriangulationArea.setFill(Color.rgb(255, 255, 255, 0.2));
-        simpleTriangulationArea.setStroke(Color.WHITE);
+        this.simpleTriangulationAreaTP = Shape.intersect(area, this.antennasTriangle);
+        this.simpleTriangulationAreaTP.setFill(Color.rgb(0, 255, 0, 0.2));
+        this.simpleTriangulationAreaTP.setStroke(Color.WHITE);
 
-        simpleTriangulationArea.setCursor(Cursor.CROSSHAIR);
-        vizGroup.getChildren().addAll(simpleTriangulationArea);
+        this.simpleTriangulationAreaFP = Shape.subtract(area, this.antennasTriangle);
+        this.simpleTriangulationAreaFP.setFill(Color.rgb(255, 0, 0, 0.2));
+        this.simpleTriangulationAreaFP.setStroke(Color.WHITE);
+
+        this.simpleTriangulationAreaFN = Shape.subtract(this.antennasTriangle, area);
+        this.simpleTriangulationAreaFN.setFill(Color.rgb(0, 0, 255, 0.2));
+        this.simpleTriangulationAreaFN.setStroke(Color.WHITE);
+
+        this.simpleTriangulationAreaTP.setCursor(Cursor.CROSSHAIR);
+        this.simpleTriangulationAreaFP.setCursor(Cursor.CROSSHAIR);
+        this.simpleTriangulationAreaFN.setCursor(Cursor.CROSSHAIR);
+        vizGroup.getChildren().addAll(this.simpleTriangulationAreaTP, this.simpleTriangulationAreaFN, this.simpleTriangulationAreaFP);
     }
 
     private double calculateDistance2P(Location point_1, Location point_2) {
