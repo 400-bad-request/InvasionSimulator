@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tooltip?>
 <GridPane fx:controller="sample.viewcontroller.ConfigController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
           stylesheets="@style.css"
@@ -13,22 +14,30 @@
 
     <padding><Insets bottom="250" left="500"/></padding>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" text="Inset value of coefficient A: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" text="Coefficient A: ">
+        <tooltip>
+            <Tooltip text="A is the received signal strength in dBm at 1 metre"/>
+        </tooltip>
+    </Label>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="0" fx:id="aCoefficient"/>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="1" text="Inset value of coefficient n: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="1" text="Coefficient n: ">
+        <tooltip>
+            <Tooltip text="n is signal decay exponent"/>
+        </tooltip>
+    </Label>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="nCoefficient"/>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Inset field width: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="3" text="Field width: "/>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="3" fx:id="fieldWidth"/>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="4" text="Inset field height: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="4" text="Field height: "/>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="4" fx:id="fieldHeight"/>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="6" text="Inset number of robots / division: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="6" text="Number of robots / division: "/>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="6" fx:id="robotsDensity"/>
 
-    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="7" text="Inset division dimension: "/>
+    <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="7" text="Division dimension: "/>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
 
     <Button styleClass="button" GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit"/>

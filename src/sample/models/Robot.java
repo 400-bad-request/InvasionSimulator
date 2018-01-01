@@ -72,7 +72,7 @@ public class Robot {
         StringBuilder info = new StringBuilder();
         int i = 1;
         for (Double value : signalStrengths) {
-            info.append(Integer.toString(i)).append(": ").append(Double.toString(value)).append(System.lineSeparator());
+            info.append(Integer.toString(i)).append(": ").append(Double.toString(Math.round(value * 100.0) / 100.0)).append(System.lineSeparator());
             i++;
         }
         return info.toString();
