@@ -135,7 +135,7 @@ public class BoardController {
 
         // Drawing grid
         if (gridActive) {
-            this.drawGrid(this.constCtx, Main.config.stageWidth, Main.config.stageHeight);
+            this.drawGrid(this.constCtx, Main.config.stageWidth, Main.config.stageHeight, Main.config.division);
         }
 
         // Draw antennas
@@ -243,25 +243,24 @@ public class BoardController {
      * @param ctx         GraphicsContext object allowing to draw on selected canvas
      * @param stageWidth  int width of canvas.
      * @param stageHeight int height of canvas.
+     * @param spacing     int number of pixels between each line of grid
      */
-    private void drawGrid(GraphicsContext ctx, int stageWidth, int stageHeight) {
-        // Spacing between lines of the grid
-        int spacing = 50;
+    private void drawGrid(GraphicsContext ctx, int stageWidth, int stageHeight, int spacing) {
 
         // Set new value of line width
         ctx.setLineWidth(1);
 
         // Number of lines to draw horizontally and vertically
-        final int hLineCount = (int) Math.floor((stageHeight + 1) / spacing);
-        final int vLineCount = (int) Math.floor((stageWidth + 1) / spacing);
+        final int hLineCount = (int) Math.floor((stageHeight - 1) / spacing);
+        final int vLineCount = (int) Math.floor((stageWidth - 1) / spacing);
 
         ctx.setStroke(Color.WHITE);
 
-        for (int i = 1; i < hLineCount; i++) {
+        for (int i = 1; i <= hLineCount; i++) {
             ctx.strokeLine(0, i * spacing, stageWidth, i * spacing);
         }
 
-        for (int i = 1; i < vLineCount; i++) {
+        for (int i = 1; i <= vLineCount; i++) {
             ctx.strokeLine(i * spacing, 0, i * spacing, stageHeight);
         }
     }
@@ -384,7 +383,7 @@ public class BoardController {
             this.clearCanvas(constCtx, Main.config.stageWidth, Main.config.stageHeight);
             gridButton.setText("Grid off");
         } else {
-            this.drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight);
+            this.drawGrid(constCtx, Main.config.stageWidth, Main.config.stageHeight, Main.config.division);
             gridButton.setText("Grid on");
         }
 
