@@ -111,6 +111,7 @@ public class BoardController {
                     activeCtx.strokeText(activeRobot.returnSignalInfo(), activeRobot.getLocation().getX() + 10, activeRobot.getLocation().getY() + 10);
 
                 }
+                this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.WHITE);
             }
         });
 
@@ -120,7 +121,6 @@ public class BoardController {
             public void run() {
                 clearCanvas(passiveCtx, Main.config.stageWidth, Main.config.stageHeight);
                 drawAntennas(passiveCtx, stage.getAntennas());
-                drawMotherRobot(passiveCtx, stage.getMotherRobot());
             }
         }, 0, 100);
     }
@@ -140,9 +140,6 @@ public class BoardController {
 
         // Draw antennas
         this.drawAntennas(this.passiveCtx, stage.getAntennas());
-
-        // Draw mother robot
-        this.drawMotherRobot(this.passiveCtx, stage.getMotherRobot());
 
         // Rendering visualization on active stage
         this.activeRender();
@@ -165,9 +162,16 @@ public class BoardController {
                 break;
             case "regular":
                 this.drawRobots(activeCtx, stage.getRobots());
+                this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.WHITE);
                 break;
             case "triangulation":
                 this.drawTriangulation(activeCtx, stage.getRobots(), stage.getAntennas());
+                RSSIMethodLocator validator = new RSSIMethodLocator(stage.getRobots());
+                if (validator.locate(stage.getMotherRobot())) {
+                    this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.GREEN);
+                } else {
+                    this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.RED);
+                }
                 break;
         }
     }
@@ -230,9 +234,9 @@ public class BoardController {
      * @param ctx         GraphicsContext object allowing to draw on selected canvas
      * @param motherRobot MotherRobot object containing information about the location of mother robot
      */
-    private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot) {
+    private void drawMotherRobot(GraphicsContext ctx, MotherRobot motherRobot, Color color) {
         // Setting visualization color.
-        ctx.setFill(Color.WHITE);
+        ctx.setFill(color);
         ctx.setStroke(Color.BLACK);
         motherRobot.draw(ctx);
     }
