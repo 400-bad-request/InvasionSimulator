@@ -13,8 +13,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("viewcontroller/config.fxml"));
-        primaryStage.setTitle("Model Configuration");
+        Parent root = FXMLLoader.load(getClass().getResource("viewcontroller/intro.fxml"));
+        primaryStage.setTitle("Intro");
         primaryStage.setScene(new Scene(root));
         primaryStage.setMaximized(true);
         primaryStage.show();
