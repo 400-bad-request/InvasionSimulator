@@ -1,7 +1,5 @@
 package sample.models;
 
-import javafx.scene.canvas.GraphicsContext;
-
 import java.util.List;
 
 /**
@@ -16,8 +14,8 @@ public class MotherRobot extends Robot {
      * Explicit constructor for mother robot, only diffrence between Robot and Mother robot constructor is
      * changing visualization Radius
      *
-     * @param location
-     * @param signalStrengths
+     * @param location        location for mother robot
+     * @param signalStrengths signal strengths List for mother robot
      */
     public MotherRobot(Location location, List<Double> signalStrengths) {
         super(location, signalStrengths);

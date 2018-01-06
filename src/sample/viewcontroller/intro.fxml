@@ -10,11 +10,15 @@
           stylesheets="@style.css"
           styleClass="root_start" gridLinesVisible="true">
 
-    <padding><Insets top="250"/></padding>
+    <padding>
+        <Insets top="250"/>
+    </padding>
 
     <VBox styleClass="label_header_background" GridPane.columnIndex="0" GridPane.rowIndex="0" alignment="CENTER">
 
-        <padding><Insets bottom="50" top="50" left="150" right="150"/></padding>
+        <padding>
+            <Insets bottom="50" top="50" left="150" right="150"/>
+        </padding>
 
         <!--<Label styleClass="label_header" text="FOREIGN PLANETS"/>-->
         <Label styleClass="label_header" text="INVASION SIMULATOR">
@@ -25,7 +29,7 @@
             </VBox.margin>
         </Label>
 
-        <Button styleClass="button_big" text="Start Invasion!" onAction="#submit" alignment="CENTER" />
+        <Button styleClass="button_big" text="Start Invasion!" onAction="#submit" alignment="CENTER"/>
 
 
     </VBox>

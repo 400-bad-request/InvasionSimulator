@@ -18,18 +18,23 @@
 
     <top>
         <HBox styleClass="top_navbar" spacing="10">
-            <padding><Insets top="10" bottom="10" left="10" right="10"/></padding>
+            <padding>
+                <Insets top="10" bottom="10" left="10" right="10"/>
+            </padding>
 
             <fx:define>
                 <ToggleGroup fx:id="toggleGroup"/>
             </fx:define>
 
-            <ToggleButton styleClass="button" fx:id="regularViewButton" text="Regular View" onAction="#regularView" toggleGroup="$toggleGroup"/>
-            <ToggleButton styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap" toggleGroup="$toggleGroup"/>
-            <ToggleButton styleClass="button" fx:id="simpleTriangulation" text="Method 1" onAction="#triangulationView" toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="regularViewButton" text="Regular View" onAction="#regularView"
+                          toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="heatMapButton" text="Heat Map" onAction="#heatMap"
+                          toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="simpleTriangulation" text="Method 1" onAction="#triangulationView"
+                          toggleGroup="$toggleGroup"/>
 
 
-            <Pane HBox.hgrow="ALWAYS" />
+            <Pane HBox.hgrow="ALWAYS"/>
 
             <Button styleClass="button" text="Next Model" onAction="#newModel"/>
             <Button styleClass="button" fx:id="gridButton" onAction="#gridView" prefWidth="120"/>

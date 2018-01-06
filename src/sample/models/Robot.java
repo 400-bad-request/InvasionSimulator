@@ -24,15 +24,15 @@ public class Robot {
         return signalStrengths;
     }
 
-    protected int visualizationRadius;
+    int visualizationRadius;
     //==================================================================================================================
 
     // CONSTRUCTORS
     //==================================================================================================================
 
     /**
-     * @param location
-     * @param signalStrengths
+     * @param location        Location for a robot
+     * @param signalStrengths Signal Strengths for a robot
      */
     public Robot(Location location, List<Double> signalStrengths) {
         this.location = location;

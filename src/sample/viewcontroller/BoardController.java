@@ -37,9 +37,9 @@ public class BoardController {
 
     // Array that holds colors assigned to appropriate antennas
     private ArrayList<Color> antennasColors = new ArrayList<>(Arrays.asList(
-            Color.rgb(255,0,0),
-            Color.rgb(0,255,0),
-            Color.rgb(0,0,255)
+            Color.rgb(255, 0, 0),
+            Color.rgb(0, 255, 0),
+            Color.rgb(0, 0, 255)
     ));
 
     // String that represents type of view that is currently displayed on canvas
@@ -64,15 +64,24 @@ public class BoardController {
     // REFERENCE TO JAVA FX CANVAS OBJECTS
     //==================================================================================================================
 
-    @FXML private Canvas constCanvas;
-    @FXML private Canvas activeCanvas;
-    @FXML private Canvas passiveCanvas;
-    @FXML private StackPane holder;
-    @FXML private Group vizGroup;
-    @FXML private ToggleButton regularViewButton;
-    @FXML private ToggleButton heatMapButton;
-    @FXML private ToggleButton simpleTriangulation;
-    @FXML private Button gridButton;
+    @FXML
+    private Canvas constCanvas;
+    @FXML
+    private Canvas activeCanvas;
+    @FXML
+    private Canvas passiveCanvas;
+    @FXML
+    private StackPane holder;
+    @FXML
+    private Group vizGroup;
+    @FXML
+    private ToggleButton regularViewButton;
+    @FXML
+    private ToggleButton heatMapButton;
+    @FXML
+    private ToggleButton simpleTriangulation;
+    @FXML
+    private Button gridButton;
 
     // METHODS
     //==================================================================================================================
@@ -97,7 +106,7 @@ public class BoardController {
         // Event listener that is responsible for showing robot info on hover.
         this.passiveCanvas.setOnMouseMoved(event -> {
 
-            if(this.activeView.equals("regular")) {
+            if (this.activeView.equals("regular")) {
 
                 Robot activeRobot = this.robotOnHover(stage.getRobots(), event.getX(), event.getY());
                 this.clearCanvas(activeCtx, Main.config.stageWidth, Main.config.stageHeight);
@@ -152,7 +161,7 @@ public class BoardController {
         // Clearing active canvas
         this.clearCanvas(this.activeCtx, Main.config.stageWidth, Main.config.stageHeight);
         // Removing simple triangulation positive area from scene
-        if( this.simpleTriangulationAreaTP != null && this.simpleTriangulationAreaFP != null && this.simpleTriangulationAreaFN != null) {
+        if (this.simpleTriangulationAreaTP != null && this.simpleTriangulationAreaFP != null && this.simpleTriangulationAreaFN != null) {
             vizGroup.getChildren().removeAll(this.simpleTriangulationAreaTP, this.simpleTriangulationAreaFP, this.simpleTriangulationAreaFN);
         }
         // Loading appropriate visualization
@@ -198,10 +207,9 @@ public class BoardController {
         );
 
         Polygon polygon = new Polygon();
-        polygon.getPoints().addAll(new Double[]{
-                antennas.get(0).getLocation().getX(), antennas.get(0).getLocation().getY(),
+        polygon.getPoints().addAll(antennas.get(0).getLocation().getX(), antennas.get(0).getLocation().getY(),
                 antennas.get(1).getLocation().getX(), antennas.get(1).getLocation().getY(),
-                antennas.get(2).getLocation().getX(), antennas.get(2).getLocation().getY() });
+                antennas.get(2).getLocation().getX(), antennas.get(2).getLocation().getY());
 
         this.antennasTriangle = polygon;
 
@@ -383,7 +391,7 @@ public class BoardController {
 
     public void gridView() {
 
-        if(this.gridActive) {
+        if (this.gridActive) {
             this.clearCanvas(constCtx, Main.config.stageWidth, Main.config.stageHeight);
             gridButton.setText("Grid off");
         } else {
@@ -397,6 +405,7 @@ public class BoardController {
     /**
      * Method that is executed after clicking Back button in view.
      * Method load Configuration Scene on stage.
+     *
      * @param actionEvent event triggered after Back button click
      */
     public void newConfig(ActionEvent actionEvent) {
@@ -488,7 +497,7 @@ public class BoardController {
 
     private double calculateDistance2P(Location point_1, Location point_2) {
 
-        return  Math.sqrt(
+        return Math.sqrt(
                 Math.pow(Math.abs(point_1.getX() - point_2.getX()), 2) +
                         Math.pow(Math.abs(point_1.getY() - point_2.getY()), 2)
         );
@@ -528,7 +537,7 @@ public class BoardController {
             int blue = (int) (255 * Math.abs(element.getSignalStrengths().get(2) - minZ.getSignalStrengths().get(2)) / deltaZ);
 
 
-            ctx.setFill(Color.rgb(red,green,blue));
+            ctx.setFill(Color.rgb(red, green, blue));
             ctx.setStroke(Color.BLACK);
             element.draw(ctx);
         }

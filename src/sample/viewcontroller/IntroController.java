@@ -15,7 +15,8 @@ import java.io.IOException;
 public class IntroController {
 
     @FXML
-    public void initialize() {}
+    public void initialize() {
+    }
 
     public void submit(ActionEvent actionEvent) {
 

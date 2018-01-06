@@ -18,10 +18,10 @@ public class RSSIMethodLocator {
 
     private void getClosestRobots() {
 
-        this.closestRobots =  new ArrayList<>(Arrays.asList(this.robots.get(0), this.robots.get(0), this.robots.get(0)));
+        this.closestRobots = new ArrayList<>(Arrays.asList(this.robots.get(0), this.robots.get(0), this.robots.get(0)));
 
         for (Robot element : robots) {
-            for( int index = 0; index < this.closestRobots.size(); index++ ) {
+            for (int index = 0; index < this.closestRobots.size(); index++) {
                 if (element.getSignalStrengths().get(index) > this.closestRobots.get(index).getSignalStrengths().get(index))
                     this.closestRobots.set(index, element);
             }
@@ -47,10 +47,10 @@ public class RSSIMethodLocator {
         System.out.println("Mother.z = " + mother.getSignalStrengths().get(2));
 
         // iteration over signal values for mother robot
-        for( int i = 0; i < mother.getSignalStrengths().size(); i++ ) {
+        for (int i = 0; i < mother.getSignalStrengths().size(); i++) {
             // iteration over robots found by getClosestRobots method
             // robots with max value of signal strength produced by corresponding antenna
-            for( int j = 0; j < this.closestRobots.size(); j++ ) {
+            for (int j = 0; j < this.closestRobots.size(); j++) {
 
 
                 if (i != j && mother.getSignalStrengths().get(i) < this.closestRobots.get(j).getSignalStrengths().get(i)) {

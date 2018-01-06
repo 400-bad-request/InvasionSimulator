@@ -12,7 +12,9 @@
           stylesheets="@style.css"
           styleClass="root_start">
 
-    <padding><Insets bottom="250" left="500"/></padding>
+    <padding>
+        <Insets bottom="250" left="500"/>
+    </padding>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" text="Coefficient A: ">
         <tooltip>
