@@ -37,7 +37,7 @@ public class StageObjects {
     //==================================================================================================================
 
     /**
-     * Creating board content
+     * Creating board content with all of it's elements like robots mother robot antennas
      *
      * @param config object containing required parameters to conduct simulation
      */

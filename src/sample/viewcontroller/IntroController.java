@@ -40,4 +40,19 @@ public class IntroController {
         }
     }
 
+    public void credits(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("credits.fxml"));
+            Parent root = loader.load();
+            Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
+            Scene newScene = new Scene(root, screenSize.getWidth(), screenSize.getHeight());
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            stage.setMaximized(true);
+            stage.setScene(newScene);
+            stage.setTitle("Credits");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

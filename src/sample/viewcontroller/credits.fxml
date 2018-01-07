@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<GridPane xmlns="http://javafx.com/javafx" alignment="CENTER" hgap="10" vgap="10" gridLinesVisible="true"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="sample.viewcontroller.CreditsController"
+          stylesheets="@style.css"
+          styleClass="root_start">
+    <Button styleClass="button_big" text="Back" onAction="#backToIntro" alignment="CENTER"/>
+</GridPane>
