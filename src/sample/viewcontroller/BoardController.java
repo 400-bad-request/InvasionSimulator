@@ -81,6 +81,8 @@ public class BoardController {
     @FXML
     private ToggleButton simpleTriangulation;
     @FXML
+    private ToggleButton advancedTriangulation;
+    @FXML
     private Button gridButton;
 
     // METHODS
@@ -181,6 +183,9 @@ public class BoardController {
                 } else {
                     this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.RED);
                 }
+                break;
+            case "advanced_triangulation":
+                this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.WHITE);
                 break;
         }
     }
@@ -378,6 +383,22 @@ public class BoardController {
         }
     }
 
+    public void advancedTriangulationView() {
+        if (this.activeView.equals("advanced_triangulation")) {
+            advancedTriangulation.setSelected(true);
+        } else {
+            this.activeView = "advanced_triangulation";
+            this.activeRender();
+            System.out.println("Antenna 1.x = " + stage.getAntennas().get(0).getLocation().getX());
+            System.out.println("Antenna 1.y = " + stage.getAntennas().get(0).getLocation().getY());
+            System.out.println("Antenna 2.x = " + stage.getAntennas().get(1).getLocation().getX());
+            System.out.println("Antenna 2.y = " + stage.getAntennas().get(1).getLocation().getY());
+            System.out.println("----------------------------------------------------------------");
+            RSSIMethodLocator validator = new RSSIMethodLocator(stage.getRobots());
+            System.out.println(validator.locateNew(stage.getMotherRobot()));
+        }
+    }
+
     /**
      * Method that is executed after clicking New Model button in view.
      * Method creates new Stage Objects instance, and reload visualization for new data.
@@ -547,4 +568,5 @@ public class BoardController {
         this.timer.cancel();
         this.timer.purge();
     }
+
 }

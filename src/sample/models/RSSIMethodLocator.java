@@ -2,6 +2,7 @@ package sample.models;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class RSSIMethodLocator {
@@ -10,6 +11,8 @@ public class RSSIMethodLocator {
     private List<Robot> robots;
     // list that will hold robots located the closest to antenna corresponding to each index
     private List<Robot> closestRobots;
+
+    private double delta = 10;
 
     public RSSIMethodLocator(List<Robot> robots) {
         this.robots = robots;
@@ -59,6 +62,103 @@ public class RSSIMethodLocator {
                     return false;
                 }
 
+            }
+        }
+        return true;
+    }
+
+    private boolean checkSingleDimention(int dimention, MotherRobot mother) {
+
+        int firstDimention, secondDimention;
+
+        switch (dimention) {
+            case 0:
+                firstDimention = 1;
+                secondDimention = 2;
+                break;
+            case 1:
+                firstDimention = 0;
+                secondDimention = 2;
+                break;
+            case 2:
+            default:
+                firstDimention = 0;
+                secondDimention = 1;
+                break;
+        }
+
+        List<Robot> fistStep = new LinkedList<>();
+        List<Robot> secondStep = new LinkedList<>();
+
+        for (Robot element:this.robots) {
+            if ((element.getSignalStrengths().get(firstDimention) > mother.getSignalStrengths().get(firstDimention) - this.delta) && (element.getSignalStrengths().get(firstDimention) < mother.getSignalStrengths().get(firstDimention) + this.delta)) {
+                fistStep.add(element);
+            }
+        }
+
+        for (Robot element:fistStep) {
+            if ((element.getSignalStrengths().get(secondDimention) > mother.getSignalStrengths().get(secondDimention) - this.delta) && (element.getSignalStrengths().get(secondDimention) < mother.getSignalStrengths().get(secondDimention) + this.delta)) {
+                secondStep.add(element);
+            }
+        }
+
+        Robot max = secondStep.get(0);
+        Robot min = secondStep.get(0);
+
+        for (Robot element:secondStep) {
+            if(element.getSignalStrengths().get(dimention) > max.getSignalStrengths().get(dimention)) {
+                max = element;
+            }
+            if(element.getSignalStrengths().get(dimention) < min.getSignalStrengths().get(dimention)) {
+                min = element;
+            }
+        }
+
+        return (mother.getSignalStrengths().get(dimention) > (min.getSignalStrengths().get(dimention) + max.getSignalStrengths().get(dimention))/2);
+
+    }
+
+    public boolean locateNew(MotherRobot mother) {
+        System.out.println("Matka sygnał x: " + mother.getSignalStrengths().get(0));
+        System.out.println("Matka sygnał y: " + mother.getSignalStrengths().get(1));
+        System.out.println("Matka sygnał z: " + mother.getSignalStrengths().get(2));
+        System.out.println(" ------------------------------------------------------------- ");
+
+//        List<Robot> fistStep = new LinkedList<>();
+//        List<Robot> secondStep = new LinkedList<>();
+//
+//        for (Robot element:this.robots) {
+//            if ((element.getSignalStrengths().get(0) > mother.getSignalStrengths().get(0) - this.delta) && (element.getSignalStrengths().get(0) < mother.getSignalStrengths().get(0) + this.delta)) {
+//                fistStep.add(element);
+//            }
+//        }
+//
+//        for (Robot element:fistStep) {
+//            if ((element.getSignalStrengths().get(1) > mother.getSignalStrengths().get(1) - this.delta) && (element.getSignalStrengths().get(1) < mother.getSignalStrengths().get(1) + this.delta)) {
+//                secondStep.add(element);
+//            }
+//        }
+//
+//        Robot maxZ = secondStep.get(0);
+//        Robot minZ = secondStep.get(0);
+//
+//        for (Robot element:secondStep) {
+//            if(element.getSignalStrengths().get(2) > maxZ.getSignalStrengths().get(2)) {
+//                maxZ = element;
+//            }
+//            if(element.getSignalStrengths().get(2) < minZ.getSignalStrengths().get(2)) {
+//                minZ = element;
+//            }
+//        }
+//
+//        System.out.println("MaxZ: " + maxZ.getSignalStrengths().get(2));
+//        System.out.println("MinZ: " + minZ.getSignalStrengths().get(2));
+//
+//        return (mother.getSignalStrengths().get(2) > (minZ.getSignalStrengths().get(2) + maxZ.getSignalStrengths().get(2))/2);
+
+        for(int i = 0; i < 3; i++) {
+            if(!checkSingleDimention(i, mother)) {
+                return false;
             }
         }
         return true;

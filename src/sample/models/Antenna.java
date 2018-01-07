@@ -91,7 +91,9 @@ public class Antenna {
                         Math.pow(Math.abs(location.getY() - y), 2)
         );
 
-        return a - 10 * n * Math.log10(distance);
+//        return a - 10 * n * Math.log10(distance);
+        return a - 10 * n * distance/10;
+
     }
 
     /**

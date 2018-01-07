@@ -32,6 +32,8 @@
                           toggleGroup="$toggleGroup"/>
             <ToggleButton styleClass="button" fx:id="simpleTriangulation" text="Method 1" onAction="#triangulationView"
                           toggleGroup="$toggleGroup"/>
+            <ToggleButton styleClass="button" fx:id="advancedTriangulation" text="Method 2" onAction="#advancedTriangulationView"
+                          toggleGroup="$toggleGroup"/>
 
 
             <Pane HBox.hgrow="ALWAYS"/>
