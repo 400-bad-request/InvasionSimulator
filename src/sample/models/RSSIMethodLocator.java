@@ -115,46 +115,9 @@ public class RSSIMethodLocator {
         }
 
         return (mother.getSignalStrengths().get(dimention) > (min.getSignalStrengths().get(dimention) + max.getSignalStrengths().get(dimention))/2);
-
     }
 
     public boolean locateNew(MotherRobot mother) {
-        System.out.println("Matka sygnał x: " + mother.getSignalStrengths().get(0));
-        System.out.println("Matka sygnał y: " + mother.getSignalStrengths().get(1));
-        System.out.println("Matka sygnał z: " + mother.getSignalStrengths().get(2));
-        System.out.println(" ------------------------------------------------------------- ");
-
-//        List<Robot> fistStep = new LinkedList<>();
-//        List<Robot> secondStep = new LinkedList<>();
-//
-//        for (Robot element:this.robots) {
-//            if ((element.getSignalStrengths().get(0) > mother.getSignalStrengths().get(0) - this.delta) && (element.getSignalStrengths().get(0) < mother.getSignalStrengths().get(0) + this.delta)) {
-//                fistStep.add(element);
-//            }
-//        }
-//
-//        for (Robot element:fistStep) {
-//            if ((element.getSignalStrengths().get(1) > mother.getSignalStrengths().get(1) - this.delta) && (element.getSignalStrengths().get(1) < mother.getSignalStrengths().get(1) + this.delta)) {
-//                secondStep.add(element);
-//            }
-//        }
-//
-//        Robot maxZ = secondStep.get(0);
-//        Robot minZ = secondStep.get(0);
-//
-//        for (Robot element:secondStep) {
-//            if(element.getSignalStrengths().get(2) > maxZ.getSignalStrengths().get(2)) {
-//                maxZ = element;
-//            }
-//            if(element.getSignalStrengths().get(2) < minZ.getSignalStrengths().get(2)) {
-//                minZ = element;
-//            }
-//        }
-//
-//        System.out.println("MaxZ: " + maxZ.getSignalStrengths().get(2));
-//        System.out.println("MinZ: " + minZ.getSignalStrengths().get(2));
-//
-//        return (mother.getSignalStrengths().get(2) > (minZ.getSignalStrengths().get(2) + maxZ.getSignalStrengths().get(2))/2);
 
         for(int i = 0; i < 3; i++) {
             if(!checkSingleDimention(i, mother)) {

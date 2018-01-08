@@ -70,7 +70,7 @@ public class StageObjects {
         this.antennas = new ArrayList<>();
         // Creating required amount of antennas
         for (int i = 0; i < 3; i++) {
-            this.antennas.add(new Antenna(new Location(this.config.stageWidth, this.config.stageHeight), this.config.a, this.config.n));
+            this.antennas.add(new Antenna(new Location((int)(this.config.stageWidth*0.2), (int)(this.config.stageWidth*0.8), (int)(this.config.stageHeight*0.2), (int)(this.config.stageHeight*0.8)), this.config.a, this.config.n));
         }
     }
 
@@ -78,7 +78,7 @@ public class StageObjects {
      * Method is used to create "randomly" located mother robot
      */
     private void createMotherRobot() {
-        Location location = new Location(this.config.stageWidth, this.config.stageHeight);
+        Location location = new Location((int)(this.config.stageWidth*0.2), (int)(this.config.stageWidth*0.8), (int)(this.config.stageHeight*0.2), (int)(this.config.stageHeight*0.8));
 
         List<Double> strengths = new ArrayList<>();
         for (Antenna antenna : antennas) {

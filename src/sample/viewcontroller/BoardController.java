@@ -185,7 +185,13 @@ public class BoardController {
                 }
                 break;
             case "advanced_triangulation":
-                this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.WHITE);
+                this.drawAdvancedTriangulation(activeCtx, stage.getMotherRobot(), stage.getAntennas());
+                RSSIMethodLocator validatorNew = new RSSIMethodLocator(stage.getRobots());
+                if(validatorNew.locateNew(stage.getMotherRobot())) {
+                    this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.GREEN);
+                } else {
+                    this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.RED);
+                }
                 break;
         }
     }
@@ -389,13 +395,6 @@ public class BoardController {
         } else {
             this.activeView = "advanced_triangulation";
             this.activeRender();
-            System.out.println("Antenna 1.x = " + stage.getAntennas().get(0).getLocation().getX());
-            System.out.println("Antenna 1.y = " + stage.getAntennas().get(0).getLocation().getY());
-            System.out.println("Antenna 2.x = " + stage.getAntennas().get(1).getLocation().getX());
-            System.out.println("Antenna 2.y = " + stage.getAntennas().get(1).getLocation().getY());
-            System.out.println("----------------------------------------------------------------");
-            RSSIMethodLocator validator = new RSSIMethodLocator(stage.getRobots());
-            System.out.println(validator.locateNew(stage.getMotherRobot()));
         }
     }
 
@@ -452,6 +451,10 @@ public class BoardController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void drawAdvancedTriangulation(GraphicsContext ctx, MotherRobot mother, List<Antenna> antennas) {
+
     }
 
     // TODO: REFACTOR OF CODE BELOW.
