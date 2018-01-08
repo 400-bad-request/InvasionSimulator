@@ -8,10 +8,9 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.control.Tooltip;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -39,6 +38,24 @@ public class ConfigController {
     private TextField robotsDensity;
     @FXML
     private TextField division;
+    @FXML
+    public CheckBox random;
+    @FXML
+    public TextField xCoordinateMotherRobot;
+    @FXML
+    public TextField yCoordinateMotherRobot;
+    @FXML
+    public TextField xCoordinateAntenna1;
+    @FXML
+    public TextField yCoordinateAntenna1;
+    @FXML
+    public TextField xCoordinateAntenna2;
+    @FXML
+    public TextField yCoordinateAntenna2;
+    @FXML
+    public TextField xCoordinateAntenna3;
+    @FXML
+    public TextField yCoordinateAntenna3;
 
     //==================================================================================================================
 
@@ -64,6 +81,18 @@ public class ConfigController {
 
         Main.config.robotsDensity = Integer.parseInt(robotsDensity.getText());
         Main.config.division = Integer.parseInt(division.getText());
+
+        Main.config.antenna1X = Double.parseDouble(xCoordinateAntenna1.getText());
+        Main.config.antenna1Y = Double.parseDouble(yCoordinateAntenna1.getText());
+
+        Main.config.antenna2X = Double.parseDouble(xCoordinateAntenna2.getText());
+        Main.config.antenna2Y = Double.parseDouble(yCoordinateAntenna2.getText());
+
+        Main.config.antenna3X = Double.parseDouble(xCoordinateAntenna3.getText());
+        Main.config.antenna3Y = Double.parseDouble(yCoordinateAntenna3.getText());
+
+        Main.config.motherX = Double.parseDouble(xCoordinateMotherRobot.getText());
+        Main.config.motherY = Double.parseDouble(yCoordinateMotherRobot.getText());
 
         try {
             // Load new view
@@ -176,6 +205,43 @@ public class ConfigController {
 
         TextFormatter<Integer> divisionTextFormatter = new TextFormatter<>(converterInteger, Main.config.division, filterInteger);
         division.setTextFormatter(divisionTextFormatter);
+
+        TextFormatter<Double> motherXCoordFormatter = new TextFormatter<Double>(converterDouble, Main.config.motherX, filterDouble);
+        xCoordinateMotherRobot.setTextFormatter(motherXCoordFormatter);
+
+        TextFormatter<Double> motherYCoordFormatter = new TextFormatter<>(converterDouble, Main.config.motherY, filterDouble);
+        yCoordinateMotherRobot.setTextFormatter(motherYCoordFormatter);
+
+        TextFormatter<Double> antenna1XCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna1X, filterDouble);
+        xCoordinateAntenna1.setTextFormatter(antenna1XCoordFormatter);
+
+        TextFormatter<Double> antenna1YCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna1Y, filterDouble);
+        yCoordinateAntenna1.setTextFormatter(antenna1YCoordFormatter);
+
+        TextFormatter<Double> antenna2XCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna2X, filterDouble);
+        xCoordinateAntenna2.setTextFormatter(antenna2XCoordFormatter);
+
+        TextFormatter<Double> antenna2YCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna2Y, filterDouble);
+        yCoordinateAntenna2.setTextFormatter(antenna2YCoordFormatter);
+
+        TextFormatter<Double> antenna3XCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna3X, filterDouble);
+        xCoordinateAntenna3.setTextFormatter(antenna3XCoordFormatter);
+
+        TextFormatter<Double> antenna3YCoordFormatter = new TextFormatter<>(converterDouble, Main.config.antenna3Y, filterDouble);
+        yCoordinateAntenna3.setTextFormatter(antenna3YCoordFormatter);
+    }
+
+    @FXML
+    public void toggleActiveCoordinatesFields(ActionEvent actionEvent) {
+        Main.config.isRandom = !Main.config.isRandom;
+        xCoordinateMotherRobot.setDisable(!xCoordinateMotherRobot.disableProperty().getValue());
+        yCoordinateMotherRobot.setDisable(!yCoordinateMotherRobot.disableProperty().getValue());
+        xCoordinateAntenna1.setDisable(!xCoordinateAntenna1.disableProperty().getValue());
+        yCoordinateAntenna1.setDisable(!yCoordinateAntenna1.disableProperty().getValue());
+        xCoordinateAntenna2.setDisable(!xCoordinateAntenna2.disableProperty().getValue());
+        yCoordinateAntenna2.setDisable(!yCoordinateAntenna2.disableProperty().getValue());
+        xCoordinateAntenna3.setDisable(!xCoordinateAntenna3.disableProperty().getValue());
+        yCoordinateAntenna3.setDisable(!yCoordinateAntenna3.disableProperty().getValue());
     }
     //==================================================================================================================
 }

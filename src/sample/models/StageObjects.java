@@ -45,17 +45,19 @@ public class StageObjects {
 
         this.config = config;
 
+        boolean isRandom = this.config.isRandom;
+
         // Generating randomly located antennas
-        this.createAntennas();
+        this.createAntennas(isRandom);
 
         while (!validateAntennasPosition()) {
-            this.createAntennas();
+            this.createAntennas(isRandom);
         }
 
         // Generating ArrayList of randomly located robots
         this.createRobots();
         // Generating randomly located mother robot
-        this.createMotherRobot();
+        this.createMotherRobot(isRandom);
     }
     //==================================================================================================================
 
@@ -65,20 +67,59 @@ public class StageObjects {
     /**
      * Method is used to create "randomly" located antennas
      */
-    private void createAntennas() {
+    private void createAntennas(boolean isRandom) {
 
         this.antennas = new ArrayList<>();
         // Creating required amount of antennas
-        for (int i = 0; i < 3; i++) {
-            this.antennas.add(new Antenna(new Location((int)(this.config.stageWidth*0.2), (int)(this.config.stageWidth*0.8), (int)(this.config.stageHeight*0.2), (int)(this.config.stageHeight*0.8)), this.config.a, this.config.n));
+        if (isRandom) {
+            for (int i = 0; i < 3; i++) {
+                this.antennas.add(
+                        new Antenna(
+                                new Location(
+                                        (int) (this.config.stageWidth * 0.2),
+                                        (int) (this.config.stageWidth * 0.8),
+                                        (int) (this.config.stageHeight * 0.2),
+                                        (int) (this.config.stageHeight * 0.8)
+                                ),
+                                this.config.a,
+                                this.config.n
+                        )
+                );
+            }
+        } else {
+            this.antennas.add(new Antenna(
+                    new Location(this.config.antenna1X, this.config.antenna1Y),
+                    this.config.a,
+                    this.config.n)
+            );
+            this.antennas.add(new Antenna(
+                    new Location(this.config.antenna2X, this.config.antenna2Y),
+                    this.config.a,
+                    this.config.n)
+            );
+            this.antennas.add(new Antenna(
+                    new Location(this.config.antenna3X, this.config.antenna3Y),
+                    this.config.a,
+                    this.config.n)
+            );
         }
     }
 
     /**
      * Method is used to create "randomly" located mother robot
      */
-    private void createMotherRobot() {
-        Location location = new Location((int)(this.config.stageWidth*0.2), (int)(this.config.stageWidth*0.8), (int)(this.config.stageHeight*0.2), (int)(this.config.stageHeight*0.8));
+    private void createMotherRobot(boolean isRandom) {
+        Location location;
+        if (isRandom) {
+            location = new Location(
+                    (int) (this.config.stageWidth * 0.2),
+                    (int) (this.config.stageWidth * 0.8),
+                    (int) (this.config.stageHeight * 0.2),
+                    (int) (this.config.stageHeight * 0.8)
+            );
+        } else {
+            location = new Location(this.config.motherX, this.config.motherY);
+        }
 
         List<Double> strengths = new ArrayList<>();
         for (Antenna antenna : antennas) {

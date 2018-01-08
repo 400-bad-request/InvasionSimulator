@@ -7,13 +7,14 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.CheckBox?>
 <GridPane fx:controller="sample.viewcontroller.ConfigController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10"
           stylesheets="@style.css"
           styleClass="root_start">
 
     <padding>
-        <Insets bottom="250" left="500"/>
+        <Insets bottom="100" left="0"/>
     </padding>
 
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="0" text="Coefficient A: ">
@@ -42,5 +43,42 @@
     <Label styleClass="label" GridPane.columnIndex="0" GridPane.rowIndex="7" text="Division dimension: "/>
     <TextField styleClass="text_field" GridPane.columnIndex="1" GridPane.rowIndex="7" fx:id="division"/>
 
-    <Button styleClass="button" GridPane.columnIndex="1" GridPane.rowIndex="9" text="Run" onAction="#submit"/>
+    <Label GridPane.columnIndex="0" GridPane.rowIndex="9" text="Generate Default Values: "/>
+    <CheckBox GridPane.columnIndex="1" GridPane.rowIndex="9" fx:id="random" selected="true"
+              onAction="#toggleActiveCoordinatesFields"/>
+
+    <Button styleClass="button" GridPane.columnIndex="1" GridPane.rowIndex="10" text="Run" onAction="#submit"/>
+
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="0" text="Mother Robot Coordinates: ">
+        <tooltip>
+            <Tooltip text="Fields represent respectively horizontal and vertical coordinates of points."/>
+        </tooltip>
+    </Label>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="0" fx:id="xCoordinateMotherRobot"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="1" fx:id="yCoordinateMotherRobot"/>
+
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="3" text="Antenna 1 Coordinates">
+        <tooltip>
+            <Tooltip text="Fields represent respectively horizontal and vertical coordinates of points."/>
+        </tooltip>
+    </Label>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="3" fx:id="xCoordinateAntenna1"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="4" fx:id="yCoordinateAntenna1"/>
+
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="6" text="Antenna 2 Coordinates">
+        <tooltip>
+            <Tooltip text="Fields represent respectively horizontal and vertical coordinates of points."/>
+        </tooltip>
+    </Label>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="6" fx:id="xCoordinateAntenna2"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="7" fx:id="yCoordinateAntenna2"/>
+
+    <Label GridPane.columnIndex="2" GridPane.rowIndex="9" text="Antenna 3 Coordinates">
+        <tooltip>
+            <Tooltip text="Fields represent respectively horizontal and vertical coordinates of points."/>
+        </tooltip>
+    </Label>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="9" fx:id="xCoordinateAntenna3"/>
+    <TextField styleClass="text_field" GridPane.columnIndex="3" GridPane.rowIndex="10" fx:id="yCoordinateAntenna3"/>
+
 </GridPane>

@@ -187,7 +187,7 @@ public class BoardController {
             case "advanced_triangulation":
                 this.drawAdvancedTriangulation(activeCtx, stage.getMotherRobot(), stage.getAntennas());
                 RSSIMethodLocator validatorNew = new RSSIMethodLocator(stage.getRobots());
-                if(validatorNew.locateNew(stage.getMotherRobot())) {
+                if (validatorNew.locateNew(stage.getMotherRobot())) {
                     this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.GREEN);
                 } else {
                     this.drawMotherRobot(this.activeCtx, stage.getMotherRobot(), Color.RED);
@@ -311,7 +311,10 @@ public class BoardController {
     private Robot robotOnHover(List<Robot> robots, double mouseX, double mouseY) {
 
         for (Robot element : robots) {
-            if ((Math.pow((element.getLocation().getX() - mouseX), 2) + Math.pow((element.getLocation().getY() - mouseY), 2)) <= 25) {
+            if ((
+                    Math.pow((element.getLocation().getX() - mouseX), 2) +
+                    Math.pow((element.getLocation().getY() - mouseY), 2)
+            ) <= 25) {
                 return element;
             }
         }
@@ -455,7 +458,7 @@ public class BoardController {
 
     private void drawAdvancedTriangulation(GraphicsContext ctx, MotherRobot mother, List<Antenna> antennas) {
 
-        for(int i = 0; i < antennas.size(); i++) {
+        for (int i = 0; i < antennas.size(); i++) {
             double radius = calculateDistance2P(mother.getLocation(), antennas.get(i).getLocation());
             ctx.setStroke(this.antennasColors.get(i));
             ctx.strokeOval(

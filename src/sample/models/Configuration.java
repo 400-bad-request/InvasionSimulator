@@ -10,4 +10,13 @@ public class Configuration {
     public int division = 50;
     public int stageWidth = 1300;
     public int stageHeight = 600;
+    public boolean isRandom = false;
+    public double antenna1X = 450;
+    public double antenna1Y = 150;
+    public double antenna2X = 600;
+    public double antenna2Y = 450;
+    public double antenna3X = 825;
+    public double antenna3Y = 175;
+    public double motherX = 625;
+    public double motherY = 350;
 }
