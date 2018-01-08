@@ -99,6 +99,9 @@ public class ConfigController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("board.fxml"));
             Parent root = loader.load();
             BoardController controller = loader.getController();
+            if (!Main.config.isRandom) {
+                controller.nextModelButton.setVisible(false);
+            }
             // Get screen size of monitor
             Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
             // Creating new scene

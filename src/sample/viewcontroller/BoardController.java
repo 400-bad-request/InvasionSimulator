@@ -84,6 +84,8 @@ public class BoardController {
     private ToggleButton advancedTriangulation;
     @FXML
     private Button gridButton;
+    @FXML
+    public Button nextModelButton;
 
     // METHODS
     //==================================================================================================================
@@ -436,7 +438,18 @@ public class BoardController {
             // Load new view
             FXMLLoader loader = new FXMLLoader(getClass().getResource("config.fxml"));
             Parent root = loader.load();
-
+            ConfigController configController = loader.getController();
+            if (!Main.config.isRandom) {
+                configController.random.setSelected(false);
+                configController.xCoordinateMotherRobot.setDisable(false);
+                configController.yCoordinateMotherRobot.setDisable(false);
+                configController.xCoordinateAntenna1.setDisable(false);
+                configController.yCoordinateAntenna1.setDisable(false);
+                configController.xCoordinateAntenna2.setDisable(false);
+                configController.yCoordinateAntenna2.setDisable(false);
+                configController.xCoordinateAntenna3.setDisable(false);
+                configController.yCoordinateAntenna3.setDisable(false);
+            }
             // Get screen size of monitor
             Rectangle2D screenSize = Screen.getPrimary().getVisualBounds();
             // Creating new scene

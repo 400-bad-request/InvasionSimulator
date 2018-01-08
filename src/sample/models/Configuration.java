@@ -10,7 +10,7 @@ public class Configuration {
     public int division = 50;
     public int stageWidth = 1300;
     public int stageHeight = 600;
-    public boolean isRandom = false;
+    public boolean isRandom = true;
     public double antenna1X = 450;
     public double antenna1Y = 150;
     public double antenna2X = 600;
