@@ -455,6 +455,16 @@ public class BoardController {
 
     private void drawAdvancedTriangulation(GraphicsContext ctx, MotherRobot mother, List<Antenna> antennas) {
 
+        for(int i = 0; i < antennas.size(); i++) {
+            double radius = calculateDistance2P(mother.getLocation(), antennas.get(i).getLocation());
+            ctx.setStroke(this.antennasColors.get(i));
+            ctx.strokeOval(
+                    antennas.get(i).getLocation().getX() - radius,
+                    antennas.get(i).getLocation().getY() - radius,
+                    2 * radius,
+                    2 * radius
+            );
+        }
     }
 
     // TODO: REFACTOR OF CODE BELOW.
