@@ -85,3 +85,29 @@
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
+
+/* CREDITS VIEW */
+
+.credits_title {
+    -fx-font-size: 50pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: rgb(255, 255, 255);
+    /*-fx-opacity: 1;*/
+    /*-fx-effect: dropshadow(one-pass-box, black, 12, 0.0, 5, 0);*/
+}
+
+.credits_default_text {
+    -fx-font-size: 11pt;
+    -fx-fill: rgb(255, 255, 255);
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.credits_default_label {
+    -fx-font-size: 15pt;
+    -fx-fill: rgb(255, 255, 255);
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.credits_content_box {
+    -fx-background-color: derive(#1d1d1d, 10%);
+}
