@@ -17,6 +17,6 @@ public class Configuration {
     public double antenna2Y = 450;
     public double antenna3X = 825;
     public double antenna3Y = 175;
-    public double motherX = 625;
-    public double motherY = 350;
+    public double motherX = 675;
+    public double motherY = 200;
 }
