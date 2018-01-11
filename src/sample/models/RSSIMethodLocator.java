@@ -33,22 +33,6 @@ public class RSSIMethodLocator {
 
     public boolean locate(MotherRobot mother) {
 
-        System.out.println("1x = " + this.closestRobots.get(0).getSignalStrengths().get(0));
-        System.out.println("1y = " + this.closestRobots.get(0).getSignalStrengths().get(1));
-        System.out.println("1z = " + this.closestRobots.get(0).getSignalStrengths().get(2));
-        System.out.println(" ------------------------------------------------------------- ");
-        System.out.println("2x = " + this.closestRobots.get(1).getSignalStrengths().get(0));
-        System.out.println("2y = " + this.closestRobots.get(1).getSignalStrengths().get(1));
-        System.out.println("2z = " + this.closestRobots.get(1).getSignalStrengths().get(2));
-        System.out.println(" ------------------------------------------------------------- ");
-        System.out.println("3x = " + this.closestRobots.get(2).getSignalStrengths().get(0));
-        System.out.println("3y = " + this.closestRobots.get(2).getSignalStrengths().get(1));
-        System.out.println("3z = " + this.closestRobots.get(2).getSignalStrengths().get(2));
-        System.out.println(" ------------------------------------------------------------- ");
-        System.out.println("Mother.x = " + mother.getSignalStrengths().get(0));
-        System.out.println("Mother.y = " + mother.getSignalStrengths().get(1));
-        System.out.println("Mother.z = " + mother.getSignalStrengths().get(2));
-
         // iteration over signal values for mother robot
         for (int i = 0; i < mother.getSignalStrengths().size(); i++) {
             // iteration over robots found by getClosestRobots method

@@ -96,10 +96,7 @@
                         <Label GridPane.columnIndex="1" GridPane.rowIndex="3" text="www.kaggle.com/skalskip"/>
                     </GridPane>
 
-
                 </HBox>
-
-
 
                 <HBox spacing="10">
 
