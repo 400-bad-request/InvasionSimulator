@@ -11,9 +11,9 @@ Invasion Simulator is an educational application created to test and visualize d
 
 ## Take a look
 
-<img src="https://github.com/SkalskiP/InvasionSimulator/blob/master/screenshots/1.PNG" alt="Main Screen">
-<img src="https://github.com/SkalskiP/InvasionSimulator/blob/master/screenshots/2.PNG" alt="Heat Map">
-<img src="https://github.com/SkalskiP/InvasionSimulator/blob/master/screenshots/3.PNG" alt="Method 1">
-<img src="https://github.com/SkalskiP/InvasionSimulator/blob/master/screenshots/4.PNG" alt="Method 2">
+<img src="https://github.com/adamczyk777/java-signal-strength-localization/blob/master/screenshots/1.PNG" alt="Main Screen">
+<img src="https://github.com/adamczyk777/java-signal-strength-localization/blob/master/screenshots/2.PNG" alt="Heat Map">
+<img src="https://github.com/adamczyk777/java-signal-strength-localization/blob/master/screenshots/3.PNG" alt="Method 1">
+<img src="https://github.com/adamczyk777/java-signal-strength-localization/blob/master/screenshots/4.PNG" alt="Method 2">
 
 Project is under MIT License, so feel free to use it ;)
