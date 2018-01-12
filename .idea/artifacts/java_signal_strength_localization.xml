@@ -1,0 +1,28 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="java-signal-strength-localization">
+    <output-path>$PROJECT_DIR$/out/artifacts/java_signal_strength_localization</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="icons">
+          <JavaFxApplicationIcons>
+            <option name="linuxIcon" value="$PROJECT_DIR$/assets/mars-rover.png" />
+            <option name="macIcon" value="$PROJECT_DIR$/assets/mars-rover.icns" />
+            <option name="windowsIcon" value="$PROJECT_DIR$/assets/mars-rover.ico" />
+          </JavaFxApplicationIcons>
+        </option>
+        <option name="nativeBundle" value="all" />
+        <option name="title" value="InvasionSimulator" />
+        <option name="vendor" value="" />
+        <option name="version" value="" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="java_signal_strength_localization.jar">
+        <element id="module-output" name="java-signal-strength-localization" />
+      </element>
+    </root>
+  </artifact>
+</component>

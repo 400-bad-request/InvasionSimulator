@@ -77,7 +77,7 @@
                     </padding>
 
                     <ImageView fitHeight="180.0" fitWidth="180.0">
-                        <Image url="@../../../../../assets/piotr_skalski.jpg"/>
+                        <Image url="@../assets/piotr_skalski.jpg" />
                     </ImageView>
 
                     <GridPane hgap="10" vgap="20">
@@ -105,7 +105,7 @@
                     </padding>
 
                     <ImageView fitHeight="180.0" fitWidth="180.0">
-                        <Image url="@../../../../../assets/jakub_adamczyk.jpg"/>
+                        <Image url="@../assets/jakub_adamczyk.jpg"/>
                     </ImageView>
 
                     <GridPane hgap="10" vgap="20">
