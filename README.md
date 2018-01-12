@@ -6,7 +6,7 @@ Invasion Simulator is an educational application created to test and visualize d
 
 ## Initial Creators
  
-[Jakub Adamczyk](https://www.linkedin.com/in/jakub-a-044a17a7/), his [GitHub](https://github.com/adamczyk777)
+[Jakub Adamczyk](https://www.linkedin.com/in/jakub-a-044a17a7/), his [GitHub](https://github.com/adamczyk777)  
 [Piotr Skalski](https://www.linkedin.com/in/piotr-skalski-36b5b4122/), his [GitHub](https://github.com/SkalskiP)  
 
 ## Take a look
